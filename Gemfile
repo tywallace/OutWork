@@ -8,8 +8,9 @@ group :development do
  gem 'sqlite3'
 end
 group :production do
- gem 'pg'
- gem 'rails_12factor'
+  gem 'pg'
+  gem 'rails_12factor'
+  gem 'puma'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -49,3 +50,4 @@ gem 'bcrypt', '3.1.9'
 
 #Bootstrap
 gem 'bootstrap-sass', '3.2.0.0'
+
