@@ -10,7 +10,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  gem 'puma'
+  # gem 'puma'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -51,3 +51,9 @@ gem 'bcrypt', '3.1.9'
 #Bootstrap
 gem 'bootstrap-sass', '3.2.0.0'
 
+#Create fake users
+gem 'faker',                '1.4.2'
+
+#Paginate
+gem 'will_paginate',           '3.0.7'
+gem 'bootstrap-will_paginate', '0.0.10'
