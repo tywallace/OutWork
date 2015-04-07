@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
+    @log = Log.new
+    @logs = current_user.logs.order("created_at DESC").where("result IS NOT NULL").all
   end
 
   def new

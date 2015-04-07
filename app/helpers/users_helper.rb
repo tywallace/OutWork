@@ -7,4 +7,8 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+
+  def set_state()
+  	    session[:state] = 1 if session[:state].nil?
+  end
 end

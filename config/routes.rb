@@ -18,6 +18,12 @@ Rails.application.routes.draw do
   resources :microposts,          only: [:create, :destroy]
   resources :relationships,       only: [:create, :destroy]
 
+   resources :logs, only: [:create]
+
+  post "logs/update_ended_at" => "logs#update_ended_at"
+  post "logs/update_result" => "logs#update_result"
+  post "logs/start_work" => "logs#start_work"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
