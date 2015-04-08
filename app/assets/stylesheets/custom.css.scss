@@ -1,3 +1,4 @@
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
@@ -289,4 +290,88 @@ span.picture {
   input {
     border: 0;
   }
+}
+
+/* Timer */
+
+#work-timer, #break-timer{
+  text-align: center;
+}
+
+#work-timer h1, #break-timer h1{
+  font-size: 42pt;
+}
+
+#feed{
+  /*margin-left: 5%;
+  margin-right: 5%;*/
+  background: white;
+  padding: 10px;
+}
+
+.task-feed{
+  background: #FDE6E8;
+  border-radius: 10px;
+  height: 100%;
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.result-feed{
+  background: #D5ECEE;
+  border-radius: 10px;
+  height: 100%;
+  display: inline-block;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.feed-item{
+  margin: 10px 0px;
+  background-color: #FFFFFF;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.msg{
+  text-align: center;
+  min-height: 25px;
+}
+
+.work-area{
+  margin-top: 10px;
+  min-height: 270px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/*.highlight{
+  background-color: #c0deff;
+}*/
+
+.counter-area{
+  margin-right: 12px;
+  margin-top: 7px;
+}
+
+#log-result-btn, #log-task-btn{
+  margin-right: 15px;
+}
+
+textarea{
+  resize: none;
+}
+
+.form-label{
+  padding-left: 30px;
+  margin-bottom: -20px;
+}
+
+.login-form{
+  background-color: white;
+  border-radius: 20px;
+  padding: 15px;
 }
