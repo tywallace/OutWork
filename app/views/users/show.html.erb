@@ -16,7 +16,7 @@
           <div class="row form-label">
             <h3>What's your task?</h3>
           </div>
-          <%= f.input :task, label: " " %>
+          <%= f.input :task, label: "", required: false %>
           <%= f.button :submit, value: "Start Pomodoro", class: "btn btn-danger pull-right", id: "log-task-btn"%>
           <div class="row counter-area pull-right text-muted" id="counter">120</div>
         <% end %>
@@ -31,7 +31,7 @@
           <p class="text-muted">Started at <%= current_user.logs.last.created_at.strftime("%l:%M%P") %>, ended at <%= current_user.logs.last.ended_at.strftime("%l:%M%P") %></p>
         </div>
         <%= simple_form_for @log, remote:true, url: '/logs/update_result' do |f| %>
-          <%= f.input :result, label: "How did you do?"%>
+          <%= f.input :result, label: "How did you do?", required: false%>
           <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn" %>
           <div class="row counter-area pull-right text-muted" id="counter">120</div>
         <% end %>
@@ -106,38 +106,28 @@
 </div>
 
 <script>
-$(document).ready(function(){
-  $('#log-task-btn').prop('disabled', true);
-  $('#log_task').bind('input',function(){
-    var length = $(this).val().length;
-    $('#counter').text(120-length);
-    if (length==0){
-      $('#log-task-btn').prop('disabled', true);
-      $('#counter').css('color', '#999999');
-    } else if (length > 0 && length<=120) {
-      $('#log-task-btn').removeAttr('disabled');
-      $('#counter').css('color', '#999999');
-    } else {
-      $('#counter').css('color', 'red');
-      $('#log-task-btn').prop('disabled', true);
-    }
-  });
+// $(document).ready(function(){
+//   $('#log_task').bind('input',function(){
+//     var length = $(this).val().length;
+//     $('#counter').text(120-length);
+//      if (length<=120) {
+//       $('#counter').css('color', '#999999');
+//     } else {
+//       $('#counter').css('color', 'red');
+//       $('#log-task-btn').prop('disabled', true);
+//     }
+//   });
 
-  $('#log-result-btn').prop('disabled', true);
-  $('#log_result').bind('input',function(){
-    var length = $(this).val().length;
-    $('#counter').text(120-length);
-    if (length==0){
-      $('#log-result-btn').prop('disabled', true);
-      $('#counter').css('color', '#999999');
-    } else if (length > 0 && length<=120) {
-      $('#log-result-btn').removeAttr('disabled');
-      $('#counter').css('color', '#999999');
-    } else {
-      $('#counter').css('color', 'red');
-      $('#log-result-btn').prop('disabled', true);
-    }
-  });
+//   $('#log_result').bind('input',function(){
+//     var length = $(this).val().length;
+//     $('#counter').text(120-length);
+//     if (length<=120) {
+//       $('#counter').css('color', '#999999');
+//     } else {
+//       $('#counter').css('color', 'red');
+//       $('#log-result-btn').prop('disabled', true);
+//     }
+//   });
 
   if (<%= session[:state] == 2 %>){
     $('#task-header').html('<h3 class="text-danger">Task : <%= task %></h3>')

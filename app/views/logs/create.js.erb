@@ -1,6 +1,9 @@
 //On 'Start Pomodoro' submit:
-
-<% task = current_user.logs.last.task %>
+<% if current_user.logs.last.task == "" %>
+	<% task = "No Task Specified" %>
+<% elsif %>
+	<% task = current_user.logs.last.task %>
+<% end %>
 $('#task-header').html('<h3 class="text-danger">Task : <%= task %></h3>')
 $("#form-area").html('');
 $("#counter").html('');
@@ -9,7 +12,7 @@ $("#counter").html('');
 $('#work-timer').html('<h1>25:00</h1>', startWorkTimer());
 
 function startWorkTimer(){
-	var time = 1500;
+	var time = 10;
 	// var time = 2;
 	var timer = setInterval(function(){
 		time = decrement(time);
