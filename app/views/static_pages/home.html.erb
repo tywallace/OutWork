@@ -1,5 +1,12 @@
 <% if logged_in? %>
   <div class="row">
+    <h4 class="text-muted">Hello <%= current_user.name %></h4>
+    <div class="work-area">
+      <%= render '/logs/timer' %>  
+    </div>
+  </div>
+
+  <div class="row">
     <aside class="col-md-4">
       <section class="user_info">
         <%= render 'shared/user_info' %>
