@@ -23,7 +23,7 @@
       <% elsif session[:state] == 2 %>
         <!-- Display work timer OR 'End session' button -->
         <% task = current_user.logs.last.task %>
-        <% timeRemaining = 5 - (Time.now - current_user.logs.last.created_at).round %>
+        <% timeRemaining = 1500 - (Time.now - current_user.logs.last.created_at).round %>
       <% elsif session[:state] == 3 %>
         <!-- Display 'How did you do?' form -->
         <% task = current_user.logs.last.task %>
