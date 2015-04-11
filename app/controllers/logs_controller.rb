@@ -31,11 +31,21 @@ class LogsController < ApplicationController
 	# State 3
 	# Process 'Log results' form
 	def update_result
-		@log = current_user.logs.last.update(log_update_result_params)
-		session[:state] = 4
-		respond_to do |format|
-			format.html { redirect_to :back }
-	        format.js
+		if params[:break]
+			@log = current_user.logs.last.update(log_update_result_params)
+			session[:state] = 4
+			respond_to do |format|
+				format.html { redirect_to :back }
+		        format.js
+			end
+		end
+		if params[:work]
+			session[:state] = 1
+			@log = Log.new
+			respond_to do |format|
+				format.html { redirect_to :back }
+		        format.js
+			end
 		end
 	end
 
@@ -51,8 +61,7 @@ class LogsController < ApplicationController
 		end
 	end
 
-private
-
+	private
 	def log_create_params
 		params.require(:log).permit(:task)
 	end

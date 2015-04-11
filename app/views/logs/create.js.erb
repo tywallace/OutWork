@@ -26,7 +26,7 @@ function startWorkTimer(){
 		{
 			clearInterval(timer);
 			createEndSessionForm();
-			playSound('/assets/notify')
+			playSound('http://s3.amazonaws.com/outwork/audio/notify')
 		}
 		$('#work-timer').html('<h1>'+(minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds)+'</h1>');
 	}, 1000)

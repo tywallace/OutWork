@@ -7,7 +7,7 @@ $("#form-area").html('<div class="row text-center">\
 					  </div>\
 					  <%= simple_form_for @log, remote:true, url: logs_update_result_path, method: :post do |f| %>\
 		                  <%= f.input :result, label: "How did you do?", required: false %>\
-		                  <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn"  %>\
+		                  <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn" %>\
 		                  <div class="row counter-area pull-right text-muted" id="counter">120</div>\
 	                  <% end %>');
 $("#counter").html('120');
