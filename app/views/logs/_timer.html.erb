@@ -23,7 +23,7 @@
       <% elsif session[:state] == 2 %>
         <!-- Display work timer OR 'End session' button -->
         <% task = current_user.logs.last.task %>
-        <% timeRemaining = 1500 - (Time.now - current_user.logs.last.created_at).round %>
+        <% timeRemaining = 5 - (Time.now - current_user.logs.last.created_at).round %>
       <% elsif session[:state] == 3 %>
         <!-- Display 'How did you do?' form -->
         <% task = current_user.logs.last.task %>
@@ -38,6 +38,7 @@
       <% elsif session[:state] == 4 %>
         <!-- Display break timer OR 'Start work' button -->
         <% timeRemaining = 5 - (Time.now - current_user.logs.last.updated_at).round %>
+
       <% end %>
     </div>
     <div class="clearfix"></div>
@@ -60,9 +61,11 @@ $(document).ready(function(){
   } else if (<%= session[:state] == 4 %>){
     $("#form-area").html('<h4 class="text-center text-info">Time for a break!</h4>');
     if (<%=timeRemaining%> > 0){
+      createEndBreakForm();
       var minutes = Math.floor(<%=timeRemaining%> / 60);
       var seconds = <%=timeRemaining%> % 60;
       $('#break-timer').html('<h1>'+(minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds)+'</h1>', startBreakTimer(<%=timeRemaining%>));
+
     } else {
       $('#break-timer').html('<h1>00:00</h1>');
       createStartWorkForm();
@@ -95,6 +98,16 @@ function startBreakTimer(length){
     time = decrement(time);
     var minutes = Math.floor(time / 60);
     var seconds = time % 60;
+    if(time > 0)
+    {
+      createEndBreakForm();
+      var stopButton = document.getElementById('stop');
+      stopButton.onclick = function() {
+        time = 0;
+        playSound('https://outwork.s3.amazonaws.com/audio/notify')
+      };
+    }
+
     if(time == 0)
     {
       clearInterval(timer);
@@ -124,4 +137,13 @@ function createStartWorkForm(){
             </div>');
 }
 
+function createEndBreakForm(){
+  $("#form-area").html('<div class="row text-center">\
+              <%= button_to "End Break", logs_start_work_path, remote: true, class: "btn btn-danger col-sm-4 col-sm-offset-4", id: "stop" %>\
+            </div>');
+}
+
+function endBreak(){
+  time = 0
+}
 </script>

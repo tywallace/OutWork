@@ -39,20 +39,36 @@ $('#break-timer').html('<h1>5:00</h1>', startBreakTimer());
             }
 
 function startBreakTimer(){
+	var stopButton = document.getElementById('stop');
 	var time = 5;
 	// var time = 2;
 	var timer = setInterval(function(){
 		time = decrement(time);
 		var minutes = Math.floor(time / 60);
 		var seconds = time % 60;
+		if(time > 0)
+		{
+			createEndBreakForm();
+		}
 		if(time == 0)
 		{
 			clearInterval(timer);
 			createStartWorkForm();
-			playSound('https://outwork.s3.amazonaws.com/audio/notify')
+			playSound('https://outwork.s3.amazonaws.com/audio/notify');
 		}
 		$('#break-timer').html('<h1>'+(minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds)+'</h1>');
 	}, 1000)
+
+		stopButton.onclick = function() {
+	        time = 0;
+	        playSound('https://outwork.s3.amazonaws.com/audio/notify');
+	    };
+}
+
+
+function endBreak(){
+	time = 0;
+	playSound('https://outwork.s3.amazonaws.com/audio/notify');
 }
 
 function decrement(seconds){
@@ -61,7 +77,12 @@ function decrement(seconds){
 
 function createStartWorkForm(){
 	$("#form-area").html('<h4 class="text-center">Break time is over!</h4>\
-						<div class="row text-center">\
-							<%= button_to "Start work", logs_start_work_path, remote: true, class: "btn btn-danger col-sm-4 col-sm-offset-4" %>\
+						<div class="row text-center" id="start">\
+							<%= button_to "Start work", logs_start_work_path, remote: true, :form=> {:id =>"start"}, class: "btn btn-danger col-sm-4 col-sm-offset-4" %>\
 						</div>');
+}
+function createEndBreakForm(){
+  $("#form-area").html('<div class="row text-center" id="stop">\
+				  			<%= button_to "End Break", logs_start_work_path, remote: true, class: "btn btn-danger col-sm-4 col-sm-offset-4" %>\
+				        </div>');
 }

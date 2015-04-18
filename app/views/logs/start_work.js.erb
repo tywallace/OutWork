@@ -12,16 +12,10 @@ $("#form-area").html('<%= simple_form_for @log, remote: true do |f| %>\
 			          <% end %>');
 
 $(document).ready(function(){
-  // $('#log-task-btn').prop('disabled', true);
   $('#log_task').bind('input',function(){
     var length = $(this).val().length;
     $('#counter').text(120-length);
-    // if (length==0){
-    //   // $('#log-task-btn').prop('disabled', true);
-    //   $('#counter').css('color', '#999999');
-    // }
      if (length<=120) {
-      // $('#log-task-btn').removeAttr('disabled');
       $('#counter').css('color', '#999999');
     } else {
       $('#counter').css('color', 'red');
