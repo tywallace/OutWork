@@ -5,56 +5,54 @@
 
 
  $('#timer').html('<button type="button" id="start">Start</button>\
-	<button type="button" id="stop">Stop</button>\
-	<button type="button" id="reset">Rest</button>');
+   <button type="button" id="stop">Stop</button>\
+   <button type="button" id="reset">Reset</button>');
 
-$('#break-timer').html('<h1>05:00</h1>', clock());
+ $('#break-timer').html('<h1>05:00</h1>', clock());
 
-function clock() {
+ function clock() {
   "use strict";
-  var totalSeconds = 300, timer = totalSeconds, startButton = document.getElementById('start'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset');
+  var totalSeconds = 300, timer = totalSeconds, counter, startButton = document.getElementById('start'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset');
 
   startButton.onclick = function() {
-	    if (timer == totalSeconds)
-	    {
-	    	timer = setInterval(function() {setTime()}, 1000);
-	    }	
+    stop();
+    counter = setInterval(function() {setTime();}, 1000);
+    startButton.disabled = true;
+    stopButton.disabled = false;
   };
 
   stopButton.onclick = function() {
     if (timer) {
-      clearInterval(timer);
-      timer = null;
+      stop();
+      startButton.disabled = false;
     }
   };
 
   resetButton.onclick = function() {
-    if (timer) {
-      totalSeconds = 0;
       stop();
-    }
+      timer = totalSeconds;
+      displayTime(timer);
+      startButton.disabled = false;
   };
 
   function setTime() {
-  	alert(timer);
-  		timer = decrement(timer);
-  		alert(timer);
-		var minutes = Math.floor(timer / 60);
-		var seconds = timer % 60;
-		displayTime(seconds,minutes);
-		alert(timer);
+  	timer = decrement(timer);
+    displayTime(timer);
+    if (!timer) {
+      stop();
+      stopButton.disabled = true;
+    }
 		return timer;
-
   }
 
-  function displayTime(seconds, minutes) {
-	document.getElementById('break-timer').innerHTML = ('<h1>'+(minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds)+'</h1>');
+  function displayTime(timeLeft/*seconds, minutes*/) {
+    var seconds = timeLeft % 60, minutes = Math.floor(timeLeft / 60);
+    document.getElementById('break-timer').innerHTML = ('<h1>'+ pad(minutes) + ':' + pad(seconds) +'</h1>');
   }
 
   function decrement(seconds){
-	return seconds - 1;
-
-  };
+    return seconds - 1;
+  }
 
   function pad(val) {
     var valString = val + "";
@@ -65,7 +63,10 @@ function clock() {
     }
   }
 
-};
+  function stop() {
+    clearInterval(counter);
+  }
+}
 
 
 </script>
