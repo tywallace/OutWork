@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418191133) do
+ActiveRecord::Schema.define(version: 20150418200344) do
 
   create_table "entries", force: true do |t|
     t.string   "title"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150418191133) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "goal"
   end
 
   add_index "logs", ["user_id"], name: "index_logs_on_user_id"

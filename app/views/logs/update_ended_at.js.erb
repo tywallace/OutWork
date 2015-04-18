@@ -10,15 +10,10 @@ $("#form-area").html('<div class="row text-center">\
 	                  <% end %>');
 $("#counter").html('120');
 
-  // $('#log-result-btn').prop('disabled', true);
   $('#log_result').bind('input',function(){
     var length = $(this).val().length;
     $('#counter').text(120-length);
-    // if (length==0){
-    //   $('#log-result-btn').prop('disabled', true);
-    //   $('#counter').css('color', '#999999');
     if (length<=120) {
-      // $('#log-result-btn').removeAttr('disabled');
       $('#counter').css('color', '#999999');
     } else {
       $('#counter').css('color', 'red');

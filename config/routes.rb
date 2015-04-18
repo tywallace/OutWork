@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   post "logs/update_result" => "logs#update_result"
   post "logs/start_work" => "logs#start_work"
 
+  get 'timer' => "timer#timer"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

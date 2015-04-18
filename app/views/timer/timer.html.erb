@@ -1,0 +1,71 @@
+<div id="timer"></div>
+
+<div id="break-timer"></div>
+<script>
+
+
+ $('#timer').html('<button type="button" id="start">Start</button>\
+	<button type="button" id="stop">Stop</button>\
+	<button type="button" id="reset">Rest</button>');
+
+$('#break-timer').html('<h1>05:00</h1>', clock());
+
+function clock() {
+  "use strict";
+  var totalSeconds = 300, timer = totalSeconds, startButton = document.getElementById('start'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset');
+
+  startButton.onclick = function() {
+	    if (timer == totalSeconds)
+	    {
+	    	timer = setInterval(function() {setTime()}, 1000);
+	    }	
+  };
+
+  stopButton.onclick = function() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  };
+
+  resetButton.onclick = function() {
+    if (timer) {
+      totalSeconds = 0;
+      stop();
+    }
+  };
+
+  function setTime() {
+  	alert(timer);
+  		timer = decrement(timer);
+  		alert(timer);
+		var minutes = Math.floor(timer / 60);
+		var seconds = timer % 60;
+		displayTime(seconds,minutes);
+		alert(timer);
+		return timer;
+
+  }
+
+  function displayTime(seconds, minutes) {
+	document.getElementById('break-timer').innerHTML = ('<h1>'+(minutes.toString().length < 2 ? '0' + minutes : minutes) + ':' + (seconds.toString().length < 2 ? '0' + seconds : seconds)+'</h1>');
+  }
+
+  function decrement(seconds){
+	return seconds - 1;
+
+  };
+
+  function pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+      return "0" + valString;
+    } else {
+      return valString;
+    }
+  }
+
+};
+
+
+</script>
