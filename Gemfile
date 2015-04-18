@@ -66,3 +66,5 @@ gem 'fog',                     '1.23.0'
 gem 'simple_form'
 
 gem 'aws-sdk'
+
+gem 'omniauth-facebook', '~> 1.4.1'

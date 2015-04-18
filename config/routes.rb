@@ -1,12 +1,24 @@
 Rails.application.routes.draw do
+  get 'sessions/create'
+
+  get 'sessions/destroy'
+
+  get 'ses/create'
+
+  get 'ses/destroy'
+
   root             'static_pages#home'
   get 'help'    => 'static_pages#help'
   get 'about'   => 'static_pages#about'
   get 'contact' => 'static_pages#contact'
   get 'signup'  => 'users#new'
-  get    'login'   => 'sessions#new'
-  post   'login'   => 'sessions#create'
-  delete 'logout'  => 'sessions#destroy'
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
+
+  resources :session, only: [:create, :destroy]
+
   resources :users do
     member do
       get :following, :followers
@@ -18,7 +30,7 @@ Rails.application.routes.draw do
   resources :microposts,          only: [:create, :destroy]
   resources :relationships,       only: [:create, :destroy]
 
-   resources :logs, only: [:create]
+  resources :logs, only: [:create]
 
   post "logs/update_ended_at" => "logs#update_ended_at"
   post "logs/update_result" => "logs#update_result"
