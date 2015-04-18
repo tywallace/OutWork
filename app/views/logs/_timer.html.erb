@@ -14,26 +14,19 @@
         <!-- Display "What's your task?" form -->
         <%= simple_form_for @log, remote: true do |f| %>
           <div class="row form-label">
-            <h3>What's your task?</h3>
           </div>
-          <%= f.input :task, label: "", required: false %>
           <%= f.button :submit, value: "Start Pomodoro", class: "btn btn-danger pull-right", id: "log-task-btn"%>
-          <div class="row counter-area pull-right text-muted" id="counter">120</div>
         <% end %>
       <% elsif session[:state] == 2 %>
         <!-- Display work timer OR 'End session' button -->
-        <% task = current_user.logs.last.task %>
-        <% timeRemaining = 1500 - (Time.now - current_user.logs.last.created_at).round %>
+        <% timeRemaining = 5 - (Time.now - current_user.logs.last.created_at).round %>
       <% elsif session[:state] == 3 %>
         <!-- Display 'How did you do?' form -->
-        <% task = current_user.logs.last.task %>
         <div class="row text-center">
           <p class="text-muted">Started at <%= current_user.logs.last.created_at.strftime("%l:%M%P") %>, ended at <%= current_user.logs.last.ended_at.strftime("%l:%M%P") %></p>
         </div>
         <%= simple_form_for @log, remote:true, url: '/logs/update_result' do |f| %>
-          <%= f.input :result, label: "How did you do?", required: false%>
           <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn" %>
-          <div class="row counter-area pull-right text-muted" id="counter">120</div>
         <% end %>
       <% elsif session[:state] == 4 %>
         <!-- Display break timer OR 'Start work' button -->
@@ -47,7 +40,6 @@
 $(document).ready(function(){
 
   if (<%= session[:state] == 2 %>){
-    $('#task-header').html('<h3 class="text-danger">Task : <%= task %></h3>')
     if (<%=timeRemaining%> > 0){
       var minutes = Math.floor(<%=timeRemaining%> / 60);
       var seconds = <%=timeRemaining%> % 60;
@@ -70,7 +62,6 @@ $(document).ready(function(){
   } 
 
   if (<%= session[:state] == 3 %>){
-    $('#task-header').html('<h3 class="text-danger">Task : <%= task %></h3>')
   }
 })
 

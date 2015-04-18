@@ -20,11 +20,10 @@ $('#today').after('<div class="feed-item" style="display: none;">\
 						<div class="row">\
 							<div class="col-sm-5 col-sm-offset-1">\
 								<p class="text-muted"><%= l.created_at.strftime("%l:%M%P") %></p>\
-								<p class="task-feed text-danger"><%= l.task %></p>\
+		
 							</div>\
 							<div class="col-sm-5">\
 								<p class="text-muted"><%= l.ended_at.strftime("%l:%M%P") %></p>\
-								<p class="result-feed text-info"><%= l.result %></p>\
 							</div>\
 						</div>\
 						<hr>\

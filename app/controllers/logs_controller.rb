@@ -63,9 +63,9 @@ class LogsController < ApplicationController
 
 	private
 	def log_create_params
-		params.require(:log).permit(:task)
+		params.require(:log)
 	end
 	def log_update_result_params
-		params.require(:log).permit(:result)
+		params.require(:log)
 	end
 end
