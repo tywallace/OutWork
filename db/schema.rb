@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419024933) do
+ActiveRecord::Schema.define(version: 20150419040205) do
 
   create_table "entries", force: true do |t|
     t.string   "title"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150419024933) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "result"
   end
 
   add_index "logs", ["user_id"], name: "index_logs_on_user_id"
