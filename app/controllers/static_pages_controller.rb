@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  include UsersHelper
 	
   def home
     if logged_in?
@@ -7,8 +8,8 @@ class StaticPagesController < ApplicationController
       # @log = Log.new
       @logs = current_user.logs.order("created_at DESC").where("result IS NOT NULL").all
       @goal = current_user.goals.build
-      @todays_goal = current_user.todays_goal   
-      @todays_pomos = current_user.todays_pomos
+      @users = current_user.scoreboard
+      
     end
   end
 

@@ -87,17 +87,16 @@ class User < ActiveRecord::Base
                      OR user_id = :user_id", user_id: id)
   end
 
-  #Return a user's goal
-  def todays_goal
-    goal = Goal.where("created_at >= ?", Time.zone.now.beginning_of_day).last
-    unless goal.nil?
-      todays_goal = goal.goal
-    end
+  def scoreboard
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE  follower_id = :user_id"
+    scoreboard_users = User.all              
+    # scoreboard_users = User.where("SELECT * FROM users WHERE id IN (#{following_ids})", user_id: id)
+
   end
 
-  #Return a count of the user's pomodoros
-  def todays_pomos
-      todays_pomos = Log.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+  def all_users
+    User.where("SELECT * FROM users WHERE user_id = 95")
   end
 
   # Follows a user.

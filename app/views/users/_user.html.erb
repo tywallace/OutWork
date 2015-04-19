@@ -4,5 +4,8 @@
   <% if current_user.admin? && !current_user?(user) %>
     | <%= link_to "delete", user, method: :delete,
                                   data: { confirm: "You sure?" } %>
+
   <% end %>
+  Actual: <%= todays_pomos(user) %> / 
+  Goal: <%= todays_goal(user) %>
 </li>
