@@ -4,8 +4,6 @@
 
 <div class="done" style="display:none">
   <!-- Display 'How did you do?' form -->
-  <% task = current_user.logs.last.task %>
-
   <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
     <%= f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info pull-right", id: "log-result-input", as: :radio_buttons %>
     <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn" %>
@@ -17,13 +15,17 @@
 
  $('#timer').html('<button type="button" id="start">Start</button>\
    <button type="button" id="stop">Stop</button>\
-   <button type="button" id="reset">Reset</button>');
+   <button type="button" id="reset">Reset</button>\
+   <span id="current-segment">Work, Work, Work</span>');
 
- $('#break-timer').html('<h1>05:00</h1>', clock());
+ $('#break-timer').html('<h1>05:00</h1>', clock('work'));
 
- function clock() {
+ function clock(segment) {
   "use strict";
-  var totalSeconds = 300, timer = totalSeconds, counter, startButton = document.getElementById('start'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset');
+  // initialize
+  var totalSeconds = segment === 'break' ? 5/*180*/ : 10/*300*/, timer = totalSeconds, counter, startButton = document.getElementById('start'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset');
+  startButton.disabled = false;
+  stopButton.disabled = false;
 
   startButton.onclick = function() {
     stop();
@@ -52,12 +54,18 @@
     if (!timer) {
       stop();
       stopButton.disabled = true;
-      $('.done').css({display: 'block'});
+      if (segment === 'work') {
+        $('.done').css({display: 'block'});
+      }
+      else { // break or malformed
+        $('#current-segment').html('Back to work!');
+        $('#break-timer').html('<h1>05:00</h1>', clock('work'));
+      }
     }
 		return timer;
   }
 
-  function displayTime(timeLeft/*seconds, minutes*/) {
+  function displayTime(timeLeft) {
     var seconds = timeLeft % 60, minutes = Math.floor(timeLeft / 60);
     document.getElementById('break-timer').innerHTML = ('<h1>'+ pad(minutes) + ':' + pad(seconds) +'</h1>');
   }
@@ -79,6 +87,17 @@
     clearInterval(counter);
   }
 }
+
+$('#log-result-btn').click(function() {
+  var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
+   $('.done').css({display: 'none'});
+  if (isCompleted) {
+    $('#current-segment').html('Time for a break');
+    $('#break-timer').html('<h1>03:00</h1>', clock('break'));
+  } else {
+    $('#break-timer').html('<h1>05:00</h1>', clock('work'));
+  }
+});
 
 
 </script>
