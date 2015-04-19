@@ -2,7 +2,7 @@
   <div class="row">
     <h4 class="text-muted">Hello <%= current_user.name %></h4>
     <div class="work-area">
-      <%= render '/logs/timer' %>  
+      <!-- render '/logs/timer'   -->
     </div>
   </div>
 
@@ -18,6 +18,21 @@
         <%= render 'shared/micropost_form' %>
       </section>
     </aside>
+<% if @todays_goal.nil? %>
+    <aside class="col-md-4">
+      <section class="goal_form">
+        <%= render 'shared/goal_form' %>
+      </section>
+    </aside>
+<% else %>
+
+    <div class="col-md-8">
+      Goal:
+      <%= @todays_goal %>
+  </div>
+
+  <% end %>
+
     <div class="col-md-8">
       <h3>Micropost Feed</h3>
       <%= render 'shared/feed' %>
@@ -25,12 +40,12 @@
   </div>
 <% else %>
   <div class="center jumbotron">
-    <h1>Welcome to Grasshopper</h1>
+    <h1>Grasshopper</h1>
 
     <h2>
-      We believe in the power of social pressure and we're using it to make you more productive.
-    </h2>
-      <%= link_to "Sign up now!", "/auth/facebook", id: "sign_in", class: "btn btn-lg btn-primary" %>
+      Using social pressure to make you more productive
+    </h2> 
+      <%= link_to "Join now!", "/auth/facebook", id: "sign_in", class: "btn btn-lg btn-primary" %>
   </div>
 
 <% end %>

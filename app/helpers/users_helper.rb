@@ -1,12 +1,5 @@
 module UsersHelper
 
-  # Returns the Gravatar for the given user.
-  def gravatar_for(user, options = { size: 80 })
-    gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
-    size = options[:size]
-    gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
-    image_tag(gravatar_url, alt: user.name, class: "gravatar")
-  end
 
   def set_state()
   	    session[:state] = 1 if session[:state].nil?
@@ -14,5 +7,9 @@ module UsersHelper
 
   def profile_pic(user)
     "http://graph.facebook.com/#{user.uid}/picture?type=large"
+  end
+
+  def small_pic(user)
+    "http://graph.facebook.com/#{user.uid}/picture?type=small"
   end
 end

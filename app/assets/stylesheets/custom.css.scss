@@ -90,6 +90,31 @@ p {
   }
 }
 
+/* Jumbotron */
+
+.jumbotron{
+  background: url("../images/stone-scribe.jpg"); 
+}
+
+.jumbotron .btn-primary{
+  background-color:#933B3B;
+  border-color:#962525;
+}
+
+.jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+        font-weight: bold;
+      }
+
+.jumbotron h2 {
+        color:#E7E7E7;
+        font-size: 21px;
+      }
+.jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
 /* footer */
 
 footer {
@@ -143,7 +168,7 @@ aside {
     }
   }
 }
-
+/*
 .gravatar {
   float: left;
   margin-right: 10px;
@@ -151,7 +176,7 @@ aside {
 
 .gravatar_edit {
   margin-top: 15px;
-}
+}*/
 
 .stats {
   overflow: auto;

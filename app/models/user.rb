@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :microposts, dependent: :destroy
   has_many :logs
+  has_many :goals
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
                                    dependent:   :destroy
@@ -84,6 +85,14 @@ class User < ActiveRecord::Base
                      WHERE  follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
                      OR user_id = :user_id", user_id: id)
+  end
+
+  #Return a user's goal
+  def todays_goal
+    goal = Goal.where("created_at >= ?", Time.zone.now.beginning_of_day).last
+    unless goal.nil?
+      todays_goal = goal.goal
+    end
   end
 
   # Follows a user.

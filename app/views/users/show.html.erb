@@ -7,7 +7,7 @@
       <h3><small>Activity</small></h3>
   </div>
   <div id="feed">
-    <%= render 'logs/log' %>
+     <!-- render 'logs/log' -->
   </div>
 
     <% if false %>
@@ -15,7 +15,7 @@
         <aside class="col-md-4">
           <section>
             <h1>
-              <%= gravatar_for @user %>
+              <%= image_tag(profile_pic user)%>
               <%= @user.name %>
             </h1>
           </section>

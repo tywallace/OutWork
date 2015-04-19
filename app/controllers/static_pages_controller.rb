@@ -6,6 +6,8 @@ class StaticPagesController < ApplicationController
       @feed_items = current_user.feed.paginate(page: params[:page])
       @log = Log.new
       @logs = current_user.logs.order("created_at DESC").where("result IS NOT NULL").all
+      @goal = current_user.goals.build
+      @todays_goal = current_user.todays_goal    
     end
   end
 
