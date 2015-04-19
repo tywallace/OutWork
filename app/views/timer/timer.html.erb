@@ -4,7 +4,6 @@
 
 <div class="done" style="display:none">
   <!-- Display 'How did you do?' form -->
-  <% task = current_user.logs.last.task %>
 
   <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
     <%= f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info pull-right", id: "log-result-input", as: :radio_buttons %>
