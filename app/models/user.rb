@@ -95,6 +95,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  #Return a count of the user's pomodoros
+  def todays_pomos
+      todays_pomos = Log.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+  end
+
   # Follows a user.
   def follow(other_user)
     active_relationships.create(followed_id: other_user.id)

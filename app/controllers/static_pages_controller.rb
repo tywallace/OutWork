@@ -4,10 +4,11 @@ class StaticPagesController < ApplicationController
     if logged_in?
       @micropost  = current_user.microposts.build
       @feed_items = current_user.feed.paginate(page: params[:page])
-      @log = Log.new
+      # @log = Log.new
       @logs = current_user.logs.order("created_at DESC").where("result IS NOT NULL").all
       @goal = current_user.goals.build
-      @todays_goal = current_user.todays_goal    
+      @todays_goal = current_user.todays_goal   
+      @todays_pomos = current_user.todays_pomos
     end
   end
 
