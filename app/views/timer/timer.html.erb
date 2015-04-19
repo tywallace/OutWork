@@ -56,7 +56,6 @@
       stopButton.disabled = true;
       if (segment === 'work') {
         $('.done').css({display: 'block'});
-        $('#current-segment').html('Time for a break');
       }
       else { // break or malformed
         $('#current-segment').html('Back to work!');
@@ -89,9 +88,15 @@
   }
 }
 
-$('#log-result-btn').click(function(e) {
-  $('.done').css({display: 'none'});
-  $('#break-timer').html('<h1>03:00</h1>', clock('break'));
+$('#log-result-btn').click(function() {
+  var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
+   $('.done').css({display: 'none'});
+  if (isCompleted) {
+    $('#current-segment').html('Time for a break');
+    $('#break-timer').html('<h1>03:00</h1>', clock('break'));
+  } else {
+    $('#break-timer').html('<h1>05:00</h1>', clock('work'));
+  }
 });
 
 
