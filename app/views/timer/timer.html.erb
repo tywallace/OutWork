@@ -1,6 +1,17 @@
 <div id="timer"></div>
 
 <div id="break-timer"></div>
+
+<div class="done" style="display:none">
+  <!-- Display 'How did you do?' form -->
+  <% task = current_user.logs.last.task %>
+
+  <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
+    <%= f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info pull-right", id: "log-result-input", as: :radio_buttons %>
+    <%= f.button :submit, value: "Log results", class: "btn btn-info pull-right", id: "log-result-btn" %>
+  <% end %>
+  <br> <br> <br>
+</div>
 <script>
 
 
@@ -41,6 +52,7 @@
     if (!timer) {
       stop();
       stopButton.disabled = true;
+      $('.done').css({display: 'block'});
     }
 		return timer;
   }

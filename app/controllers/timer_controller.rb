@@ -1,6 +1,9 @@
 class TimerController < ApplicationController
 
-	def show
+	def timer
+		if logged_in?
+			@log = Log.new
+		end
 	end
 
 end
