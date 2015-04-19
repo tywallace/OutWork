@@ -6,7 +6,6 @@ $("#form-area").html('<%= simple_form_for @log, remote: true do |f| %>\
 	  					<div class="row form-label">\
 							<h3>What\'s your task?</h3>\
 						</div>\
-						  <%= f.input :task, label: "", required: false, placeholder: "No task specified"%>\
 						  <%= f.button :submit, value: "Start Pomodoro", class: "btn btn-danger pull-right", id: "log-task-btn" %>\
 						  <div class="row counter-area pull-right text-muted" id="counter">120</div>\
 			          <% end %>');
