@@ -31,13 +31,12 @@
   <% end %>
 
     <div class="work-area">
-      <%= current_user %>
-      <%= @users %>
-      <%= @users.map { |user| user }%>
-       <% @users.each do |users| %>
-        
-      <%end %>
-      <!-- render '/logs/timer'   -->
+       <% @users.each do |user| %>
+          <li>
+            <%= link_to user.name, user %>
+            <%= todays_pomos(user) %> / <%= todays_goal(user) %>
+          </li> 
+        <%end %>
     </div>
     <div class="col-md-8">
       <h3>Micropost Feed</h3>
