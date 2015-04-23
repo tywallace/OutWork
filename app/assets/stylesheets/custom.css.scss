@@ -323,12 +323,14 @@ span.picture {
 
 /* Timer */
 
-#work-timer, #break-timer{
+#instructions{
   text-align: center;
+  font-size: 36px;
 }
 
-#work-timer h1, #break-timer h1{
-  font-size: 42pt;
+#work-timer, #break-timer{
+  text-align: center;
+  font-size: 72px;
 }
 
 #feed{
