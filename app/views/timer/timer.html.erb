@@ -1,6 +1,7 @@
 <div id="instructions"></div>
 
 <div id="break-timer"></div>
+<div id="sound"></div>
 
 <div id="work-buttons"></div>
 <div id="rest-buttons" style="display:none"></div>
@@ -27,6 +28,10 @@
  $('#instructions').html('<span id="current-segment">Work</span>');
 
  $('#break-timer').html('25:00', clock('work'));
+
+ function playSound(filename){   
+                document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
+            }
 
  function clock(segment) {
   "use strict";
@@ -79,6 +84,7 @@
       stop();
       stopButton.disabled = true;
       if (segment === 'work') {
+        playSound('https://outwork.s3.amazonaws.com/audio/notify')
         $('.done').css({display: 'block'});
         $('#work-buttons').css({display:'block'});        
         $('#rest-buttons').css({display:'none'});
