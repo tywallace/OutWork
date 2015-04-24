@@ -19,7 +19,7 @@ module UsersHelper
     if goal.nil?
     	todays_goal = "No Goal"
     else
-    	todays_goal = goal.goal
+    	todays_goal = goal.content
     end
   end
 
