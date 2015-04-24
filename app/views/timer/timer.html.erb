@@ -36,7 +36,7 @@
  function clock(segment) {
   "use strict";
   // initialize
-  var totalSeconds = segment === 'break' ? 5/*300*/ : 10/*1500*/, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
+  var totalSeconds = segment === 'break' ? 300 : 1500, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
   startButton.disabled = false;
   stopButton.disabled = false;
 

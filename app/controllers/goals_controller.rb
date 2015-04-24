@@ -9,6 +9,7 @@ class GoalsController < ApplicationController
 	      redirect_to root_url
 	    else
 	      @goal = []
+	      flash[:success] = "Give yourself a goal"
 	      render 'static_pages/home'
 	    end
 	end
@@ -24,6 +25,6 @@ class GoalsController < ApplicationController
 	private
 
 	def goal_params
-      params.require(:goal).permit(:goal)
+      params.require(:goal).permit(:content)
     end
 end
