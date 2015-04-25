@@ -168,15 +168,6 @@ aside {
     }
   }
 }
-/*
-.gravatar {
-  float: left;
-  margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
-}*/
 
 .stats {
   overflow: auto;
@@ -330,40 +321,6 @@ span.picture {
 
 #work-timer, #break-timer{
   text-align: center;
-  font-size: 72px;
-}
-
-#feed{
-  /*margin-left: 5%;
-  margin-right: 5%;*/
-  background: white;
-  padding: 10px;
-}
-
-.task-feed{
-  background: #FDE6E8;
-  border-radius: 10px;
-  height: 100%;
-  display: inline-block;
-  padding: 10px 20px;
-  text-align: left;
-}
-
-.result-feed{
-  background: #D5ECEE;
-  border-radius: 10px;
-  height: 100%;
-  display: inline-block;
-  padding: 10px 20px;
-  text-align: left;
-}
-
-.feed-item{
-  margin: 10px 0px;
-  background-color: #FFFFFF;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
 }
 
 .msg{
@@ -371,12 +328,21 @@ span.picture {
   min-height: 25px;
 }
 
-.work-area{
+.scoreboard-area{
   margin-top: 10px;
   min-height: 270px;
   margin-bottom: 15px;
   border-radius: 10px;
   padding: 20px;
+}
+
+#work-buttons {
+  text-align: center;
+  font-size: 32px;
+}
+
+#break-buttons {
+  text-align: center;
 }
 
 /*.highlight{
@@ -400,4 +366,21 @@ textarea{
   background-color: white;
   border-radius: 20px;
   padding: 15px;
+}
+
+/* Main Display */
+
+.main-profile .row{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* Scoreboard */
+
+.scoreboard {
+  font-size: 18px;
+}
+
+.scoreboard tr{
+  height: 30px;
 }

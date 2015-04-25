@@ -1,48 +1,62 @@
 <% if logged_in? %>
-  <div class="row">
-    <h4 class="text-muted">Hello <%= current_user.name %></h4>
-  </div>
-
-  <div class="row">
-    <aside class="col-md-4">
-      <section class="user_info">
-        <%= render 'shared/user_info' %>
-      </section>
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>
-<!--       <section class="micropost_form">
-            render 'shared/micropost_form' %>
-           </section> -->
-    </aside>
-  <% if todays_goal(current_user) == "No Goal" %>
+  <div class="main-profile">
+    <div class="row">
       <aside class="col-md-4">
-        You MUST enter a goal to avoid an error. I am working on this.
-        <section class="goal_form">
-          <%= render 'shared/goal_form' %>
+        <section class="user_info">
+          <%= render 'shared/user_info' %>
         </section>
+        <section class="stats">
+          <%= render 'shared/stats' %>
+        </section>
+  <!--       <section class="micropost_form">
+              render 'shared/micropost_form' %>
+             </section> -->
       </aside>
-  <% else %>
-      <div class="col-md-8">
-        <div class="counter">
-          Actual: <%= todays_pomos(current_user) %> / Goal:
-          <%= todays_goal(current_user) %>
+        <% if todays_goal(current_user) == "No Goal" %>
+            <aside class="col-md-4">
+              You MUST enter a goal to avoid an error. I am working on this.
+              <section class="goal_form">
+                <%= render 'shared/goal_form' %>
+              </section>
+            </aside>
+        <% else %>
+            <div class="col-md-8">
+              <div class="counter">
+                Actual: <%= todays_pomos(current_user) %> / Goal:
+                <%= todays_goal(current_user) %>
+              </div>
+            </div>
+        <% end %>
+
+  <!--     <div class="col-md-8">
+        <h3>Micropost Feed</h3>
+        render 'shared/feed' %> 
+      </div> -->
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-md-8">
+      <div class="scoreboard-area">
+        <table class = "scoreboard">
+          <tr>
+            <td> Daily Scoreboard </td>
+          </tr>
+           <% @users.each do |user| %>
+           <tr>
+              <td>  <%= link_to user.name, user %> </td>
+              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> </td>
+            </tr>
+            <%end %>
+          </table>
         </div>
       </div>
-  <% end %>
-
-<!--     <div class="col-md-8">
-      <h3>Micropost Feed</h3>
-      render 'shared/feed' %> 
-    </div> -->
-  </div>
-  <div class="work-area">
-       <% @users.each do |user| %>
-          <li>
-            <%= link_to user.name, user %>
-            <%= todays_pomos(user) %> / <%= todays_goal(user) %>
-          </li> 
-        <%end %>
+      <div class = "col-md-4">
+        <table class = "scoreboard">
+          <tr>
+            <td> Weekly Leaders </td>
+          </tr>
+        </table>
+      </div>
     </div>
 <% else %>
   <div class="center jumbotron">

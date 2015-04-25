@@ -90,13 +90,8 @@ class User < ActiveRecord::Base
   def scoreboard
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-    scoreboard_users = User.all              
-    # scoreboard_users = User.where("SELECT * FROM users WHERE id IN (#{following_ids})", user_id: id)
-
-  end
-
-  def all_users
-    User.where("SELECT * FROM users WHERE user_id = 95")
+    User.where("id IN (#{following_ids})
+                     OR id = :user_id", user_id: id)            
   end
 
   # Follows a user.

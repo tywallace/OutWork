@@ -25,7 +25,7 @@
  $('#rest-buttons').html('<button type="button" id="start-rest" class="btn btn-info">Start</button>\
   <button type="button" id="end" class="btn btn-info">End</button>');
 
- $('#instructions').html('<span id="current-segment">Work</span>');
+ $('#instructions').html('<span id="current-segment">Pomodoro</span>');
 
  $('#break-timer').html('25:00', clock('work'));
 
@@ -36,7 +36,7 @@
  function clock(segment) {
   "use strict";
   // initialize
-  var totalSeconds = segment === 'break' ? 300 : 1500, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
+  var totalSeconds = segment === 'break' ? 5 /*300*/ : 6 /*1500*/, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
   startButton.disabled = false;
   stopButton.disabled = false;
 
@@ -86,11 +86,11 @@
       if (segment === 'work') {
         playSound('https://outwork.s3.amazonaws.com/audio/notify')
         $('.done').css({display: 'block'});
-        $('#work-buttons').css({display:'block'});        
+        $('#work-buttons').css({display:'none'});        
         $('#rest-buttons').css({display:'none'});
       }
       else { // break or malformed
-        $('#instructions').html('Work');  
+        $('#instructions').html('Pomodoro');  
         $('#work-buttons').css({display:'block'});        
         $('#rest-buttons').css({display:'none'});      
         $('#break-timer').html('25:00', clock('work'));
