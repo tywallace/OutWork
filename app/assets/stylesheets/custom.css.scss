@@ -316,11 +316,15 @@ span.picture {
 
 #instructions{
   text-align: center;
-  font-size: 36px;
+  font-size: 50px;
 }
 
 #work-timer, #break-timer{
   text-align: center;
+  font-size: 100px;
+  padding: 20px;
+  font-weight: bold;
+
 }
 
 .msg{
@@ -336,13 +340,10 @@ span.picture {
   padding: 20px;
 }
 
-#work-buttons {
+#work-buttons, #break-buttons {
   text-align: center;
   font-size: 32px;
-}
-
-#break-buttons {
-  text-align: center;
+  padding: 10px;
 }
 
 /*.highlight{

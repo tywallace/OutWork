@@ -36,7 +36,7 @@
  function clock(segment) {
   "use strict";
   // initialize
-  var totalSeconds = segment === 'break' ? 5 /*300*/ : 6 /*1500*/, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
+  var totalSeconds = segment === 'break' ? 300 : 1500, timer = totalSeconds, counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
   startButton.disabled = false;
   stopButton.disabled = false;
 
@@ -84,7 +84,7 @@
       stop();
       stopButton.disabled = true;
       if (segment === 'work') {
-        playSound('https://outwork.s3.amazonaws.com/audio/notify')
+        playSound('https://outwork.s3.amazonaws.com/audio/alarm')
         $('.done').css({display: 'block'});
         $('#work-buttons').css({display:'none'});        
         $('#rest-buttons').css({display:'none'});

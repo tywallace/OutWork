@@ -9,8 +9,8 @@ class GoalsController < ApplicationController
 	      redirect_to root_url
 	    else
 	      @goal = []
-	      flash[:success] = "Give yourself a goal"
-	      render 'static_pages/home'
+	      flash[:danger] = "Give yourself a goal"
+	      redirect_to root_url
 	    end
 	end
 
