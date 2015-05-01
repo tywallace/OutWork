@@ -34,13 +34,14 @@ if(localStorage.getItem('session') == 'break' && localStorage.getItem('clock') >
     $('#rest-buttons').css({display:'block'});
 }
 
-if(localStorage.getItem('session') == 'break' && localStorage.getItem('clock') == 0) {
+else if(localStorage.getItem('session') == 'break' && localStorage.getItem('clock') == 0) {
     $('#instructions').html('Pomodoro');
     $('#timer').html('25:00', clock('work'));
     $('#work-buttons').css({display:'block'});        
     $('#rest-buttons').css({display:'none'});
 }
-else {
+
+else if(localStorage.getItem('session') == 'work') {
     $('#instructions').html('Pomodoro');
     $('#timer').html('', clock('work'));
     $('#work-buttons').css({display:'block'});        
