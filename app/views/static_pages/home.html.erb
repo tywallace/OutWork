@@ -14,18 +14,17 @@
       </aside>
         <% if todays_goal(current_user) == "No Goal" %>
             <aside class="col-md-4">
-              You MUST enter a goal to avoid an error. I am working on this.
               <section class="goal_form">
                 <%= render 'shared/goal_form' %>
               </section>
             </aside>
         <% else %>
             <div class="col-md-8">
-              <div class="counter">
-                Actual: <%= todays_pomos(current_user) %> / Goal:
-                <%= todays_goal(current_user) %>
+              <div id = "dynamicTracker">
+                <%= render 'shared/personal_tracker' %>
               </div>
             </div>
+<!--             render 'timer/timer' %> -->
         <% end %>
 
   <!--     <div class="col-md-8">
@@ -37,27 +36,13 @@
   <div class = "row">
     <div class = "col-md-8">
       <div class="scoreboard-area">
-        <table class = "scoreboard">
-          <tr>
-            <td> Daily Scoreboard </td>
-          </tr>
-           <% @users.each do |user| %>
-           <tr>
-              <td>  <%= link_to user.name, user %> </td>
-              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> </td>
-            </tr>
-            <%end %>
-          </table>
-        </div>
-      </div>
-      <div class = "col-md-4">
-        <table class = "scoreboard">
-          <tr>
-            <td> Weekly Leaders </td>
-          </tr>
-        </table>
+        <%= render 'shared/scoreboard' %>
       </div>
     </div>
+    <div class = "col-md-4">
+      <%= render 'shared/leaderboard' %>
+    </div>
+  </div>
 <% else %>
   <div class="center jumbotron">
     <h1>Grasshopper</h1>

@@ -1,0 +1,11 @@
+<table class = "scoreboard">
+          <tr>
+            <td> Daily Scoreboard </td>
+          </tr>
+           <% @users.each do |user| %>
+           <tr>
+              <td>  <%= link_to user.name, user %> </td>
+              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> </td>
+            </tr>
+            <%end %>
+</table>
