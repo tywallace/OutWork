@@ -6,143 +6,87 @@
 <div id="work-buttons"></div>
 <div id="rest-buttons" style="display:none"></div>
 
+
+
 <div class="done" style="display:none">
+
+
   <!-- Display 'How did you do?' form -->
 
   <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
-    <%= f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info", id: "log-result-input", as: :radio_buttons %>
+    <%=      f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info", id: "log-result-input", as: :radio_buttons %>
     <%= f.button :submit, value: "Log results", class: "btn btn-info", id: "log-result-btn" %>
   <% end %>
-  <br> <br> <br>
 </div>
+<br>
+  <h2>Important Notice: If you leave this page while a timer is running, when you return the buttons will all be disabled. Hitting buttons after returning to the page will create multiple timers running in parallel. </h2>
 <script>
 
+var totalWork = 1500;
+var totalRest = 300;
+
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
-   <button type="button" id="stop" class="btn btn-info">Stop</button>\
+   <button type="button" id="pause" class="btn btn-info">Pause</button>\
+   <button type="button" id="resume" class="btn btn-info">Resume</button>\
    <button type="button" id="reset" class="btn btn-info">Reset</button>');
 
  $('#rest-buttons').html('<button type="button" id="end" class="btn btn-info">End</button>');
 
  $('#instructions').html('<span id="current-segment">Pomodoro</span>');
 
- $('#timer').html('25:00', clock('work'));
+ $('#timer').html(displayTime(sessionStorage.getItem('clock')), clock(sessionStorage.getItem('session'), sessionStorage.getItem('clock')));
 
-if(localStorage.getItem('session') == 'break' && localStorage.getItem('clock') > 0) {
-    $('#instructions').html('Break');
-    $('#timer').html('',clock('break'));
-    $('#work-buttons').css({display:'none'});        
-    $('#rest-buttons').css({display:'block'});
-}
+// if(sessionStorage.getItem('session') == 'break' && sessionStorage.getItem('clock') > 0) {
+//     $('#instructions').html('Break');
+//     $('#timer').html('',clock('break'));
+//     $('#work-buttons').css({display:'none'});        
+//     $('#rest-buttons').css({display:'block'});
+// }
 
-else if(localStorage.getItem('session') == 'break' && localStorage.getItem('clock') == 0) {
-    $('#instructions').html('Pomodoro');
-    $('#timer').html('25:00', clock('work'));
-    $('#work-buttons').css({display:'block'});        
-    $('#rest-buttons').css({display:'none'});
-}
+// else if(sessionStorage.getItem('session') == 'break' && sessionStorage.getItem('clock') == 0) {
+//     $('#instructions').html('Pomodoro');
+//     $('#timer').html('25:00', clock('work'));
+//     $('#work-buttons').css({display:'block'});        
+//     $('#rest-buttons').css({display:'none'});
+// }
 
-else if(localStorage.getItem('session') == 'work') {
-    $('#instructions').html('Pomodoro');
-    $('#timer').html('', clock('work'));
-    $('#work-buttons').css({display:'block'});        
-    $('#rest-buttons').css({display:'none'});
-    $('#start').click();
-}
+// else if(sessionStorage.getItem('session') == 'work' && sessionStorage.getItem('clock') > 0) {
+//     $('#instructions').html('Pomodoro');
+//     $('#timer').html('', clock('work'));
+//     $('#work-buttons').css({display:'block'});        
+//     $('#rest-buttons').css({display:'none'});
+//     $('#resume').click();
+// }
+
+// else if(sessionStorage.getItem('session') == 'work' && sessionStorage.getItem('clock') == 0) {
+//     $('#instructions').html('Pomodoro');
+//     $('#timer').html('', clock('work'));
+//     $('#work-buttons').css({display:'block'});        
+//     $('#rest-buttons').css({display:'none'});
+//     $('#start').click();
+// }
+
+// else {
+//     $('#instructions').html('Pomodoro');
+//     $('#timer').html('', clock('work'));
+//     $('#work-buttons').css({display:'block'});        
+//     $('#rest-buttons').css({display:'none'});
+//     // $('#start').click();
+// }
+
 
 
  function playSound(filename){   
                 document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
             }
 
- function clock(segment) {
-  "use strict";
-  // initialize
-  var totalSeconds = segment === 'break' ? 300 : 1500/*300 : 1500 */;
-
-  if(localStorage.getItem('clock') == 0 && localStorage.getItem('session') == "work") {
-    var timer = localStorage.getItem('clock');
-  }
-  else if(localStorage.getItem('clock') > 0) {
-    var timer = localStorage.getItem('clock');
-  }
-  else {
-    var timer = totalSeconds;
-  }
-
-  var counter, startButton = document.getElementById('start'), startRestButton = document.getElementById('start-rest'), stopButton = document.getElementById('stop'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
-  startButton.disabled = false;
-  stopButton.disabled = false;
-
-  startButton.onclick = function() {
-    stop();
-    counter = setInterval(function() {setTime();}, 1000);
-    startButton.disabled = true;
-    stopButton.disabled = false;
-  };
-
-  stopButton.onclick = function() {
-    if (timer) {
-      stop();
-      startButton.disabled = false;
-    }
-  };
-
-  resetButton.onclick = function() {
-      stop();
-      timer = totalSeconds;
-      displayTime(timer);
-      counter = setInterval(function() {setTime();}, 1000);
-      startButton.disabled = true;
-      stopButton.disabled = false;
-  };
-
-  endButton.onclick = function() {
-    timer = 1;      
-    displayTime(timer);
-    startButton.disabled = false;
-
-  }
-
-  function setTime() {
-    if(timer >0){
-    timer = decrement(timer);
-    }
-    localStorage.setItem("clock", timer);
-    localStorage.setItem("session", segment);
-    displayTime(timer);
-
-    if (timer <= 0) {
-      stop();
-      stopButton.disabled = true;
-      if (segment === 'work') {
-        playSound('https://outwork.s3.amazonaws.com/audio/alarm')
-        $('.done').css({display: 'block'});
-        $('#work-buttons').css({display:'none'});        
-        $('#rest-buttons').css({display:'none'});
-      }
-      else { // break or malformed
-        localStorage["session"] = 'work';
-        localStorage["clock"] = 1500;        
-        $('#instructions').html('Pomodoro');  
-        $('#work-buttons').css({display:'block'});        
-        $('#rest-buttons').css({display:'none'});      
-        $('#timer').html('25:00', clock('work'));
-      }
-    }
-		return timer;
-  }
-
-  function displayTime(timeLeft) {
-    if (timeLeft >= 0){
+ function displayTime(timeLeft) {
+    if (timeLeft > 0){
     var seconds = timeLeft % 60, minutes = Math.floor(timeLeft / 60);
     document.getElementById('timer').innerHTML = (pad(minutes) + ':' + pad(seconds));
     }
-    else { document.getElementById('timer').innerHTML = '0:00';
+    else { document.getElementById('timer').innerHTML = '00:00';
     }
-  }
-
-  function decrement(seconds){
-    return seconds - 1;
   }
 
   function pad(val) {
@@ -154,6 +98,152 @@ else if(localStorage.getItem('session') == 'work') {
     }
   }
 
+ function clock(segment, timeremaining) {
+  "use strict";
+  // initialize
+
+  var totalSeconds = segment === 'break' ? totalRest : totalWork;
+  var timer = timeremaining, counter, starttime, startButton = document.getElementById('start'), pauseButton = document.getElementById('pause'), resumeButton = document.getElementById('resume'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
+
+
+  if (segment === null) {
+    segment = 'work';
+    sessionStorage.setItem("session", segment);
+    sessionStorage.setItem("clock", totalSeconds);
+    displayTime(totalSeconds);
+    startButton.disabled = false;
+    resumeButton.disabled = true;
+    pauseButton.disabled = true;
+    resetButton.disabled = true;
+  }
+
+  else if (segment == 'work' && timeremaining == totalSeconds) {
+    startButton.disabled = false;
+    resumeButton.disabled = true;
+    pauseButton.disabled = true;
+    resetButton.disabled = true;
+
+  }
+
+  else if (segment == 'work' && timeremaining < totalSeconds && timeremaining > 0) {
+    displayTime(timeremaining);  
+    $(function(){
+      $('#resume').click();
+    });
+    startButton.disabled = true;
+    resumeButton.disabled = true;
+    pauseButton.disabled = true;
+    resetButton.disabled = true;
+
+
+  }
+
+  else if (segment == 'work' && timeremaining == 0) {
+    displayTime(timeremaining);
+    $('.done').css({display: 'block'});
+    $('#work-buttons').css({display:'none'});        
+    $('#rest-buttons').css({display:'none'});
+  }
+
+  else if (segment == 'break' && timeremaining < totalSeconds && timeremaining > 0) {
+    displayTime(timeremaining);
+    endButton.disabled = true;
+    $(function(){
+      $('#resume').click();
+    });
+    $('#instructions').html('Break');
+    $('#work-buttons').css({display:'none'});        
+    $('#rest-buttons').css({display:'block'});
+  }
+
+  startButton.onclick = function() {
+    starttime = new Date().getTime(); 
+    counter = setInterval(function() {setTime(totalSeconds);}, 1000);
+    startButton.disabled = true;
+    pauseButton.disabled = false;
+    resumeButton.disabled = true;
+    resetButton.disabled = false;
+  };
+
+  pauseButton.onclick = function() {
+      stop();
+      pauseButton.disabled = true;
+      resumeButton.disabled = false;
+  };
+
+  resumeButton.onclick = function() {
+      // stop();
+      var timeremaining = sessionStorage.getItem('clock');
+      starttime = new Date().getTime();
+      counter = setInterval(function() {setTime(timeremaining);}, 1000);
+      pauseButton.disabled = false;
+      resumeButton.disabled = true;
+
+  };
+
+  resetButton.onclick = function() {
+      stop();
+      timer = totalSeconds;
+      displayTime(timer);
+      sessionStorage["clock"] = totalSeconds;
+      startButton.disabled = false;
+      pauseButton.disabled = true;
+      resetButton.disabled = true;
+  };
+
+  endButton.onclick = function() {
+    stop();   
+    timer = 0;      
+    displayTime(timer);
+    setTime(timer);
+    startButton.disabled = false;
+    pauseButton.disabled = true;
+    resetButton.disabled = true;
+    resumeButton.disabled = true;
+
+  }
+
+  function setTime(numSeconds) {
+    if(numSeconds > 0) {
+      var now = new Date().getTime();
+      var counted = now-starttime;
+      timer = numSeconds - Math.round(counted / 1000)
+      sessionStorage.setItem("clock", timer);
+      sessionStorage.setItem("session", segment);
+      displayTime(timer);
+    }
+    else {
+      stop();
+      timer = 0;
+    }
+
+
+    if (timer <= 0) {
+      stop();
+      pauseButton.disabled = true;
+      if (segment === 'work') {
+        playSound('https://outwork.s3.amazonaws.com/audio/alarm')
+        $('.done').css({display: 'block'});
+        displayTime(timer);
+        $('#work-buttons').css({display:'none'});        
+        $('#rest-buttons').css({display:'none'});
+        endButton.disabled = false;
+      }
+      else { // break or malformed
+        sessionStorage.setItem("clock", totalWork);
+        sessionStorage.setItem("session", 'work');      
+        $('#instructions').html('Pomodoro');  
+        $('#work-buttons').css({display:'block'});        
+        $('#rest-buttons').css({display:'none'});      
+        $('#timer').html(displayTime(totalWork), clock('work', totalWork));
+      }
+    }
+		return timer;
+  }
+
+
+
+
   function stop() {
     clearInterval(counter);
   }
@@ -163,20 +253,20 @@ $('#log-result-btn').click(function() {
   var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
    $('.done').css({display: 'none'});
   if (isCompleted) {
-    localStorage["session"] = 'break';
+    sessionStorage["session"] = 'break';
+    sessionStorage["clock"] = totalRest;
     $('#instructions').html('Break');
-    $('#timer').html('05:00', clock('break'));
+    $('#timer').html(displayTime(totalRest), clock('break', totalRest));
     $('#work-buttons').css({display:'none'});        
     $('#rest-buttons').css({display:'block'});
     $('#start').click();
   } else {
-    localStorage["session"] = 'work';
-    localStorage["clock"] = 1500;
-    $('#timer').html('25:00', clock('work'));
+    sessionStorage["session"] = 'work';
+    sessionStorage["clock"] = totalWork;
+    $('#timer').html(displayTime(totalWork), clock('work', totalWork));
     $('#work-buttons').css({display:'block'});        
     $('#rest-buttons').css({display:'none'});
   }
 });
-
 
 </script>
