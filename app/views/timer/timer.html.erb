@@ -22,8 +22,8 @@
   <h2>Important Notice: If you leave this page while a timer is running, when you return the buttons will all be disabled. Hitting buttons after returning to the page will create multiple timers running in parallel. </h2>
 <script>
 
-var totalWork = 1500;
-var totalRest = 300;
+var totalWork = 10;
+var totalRest = 10;
 
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
    <button type="button" id="pause" class="btn btn-info">Pause</button>\
@@ -79,6 +79,10 @@ var totalRest = 300;
  function playSound(filename){   
                 document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
             }
+
+function stopSound(){
+  document.getElementById("sound").innerHTML="";
+}
 
  function displayTime(timeLeft) {
     if (timeLeft > 0){
@@ -157,6 +161,7 @@ var totalRest = 300;
   }
 
   startButton.onclick = function() {
+    stopSound();
     starttime = new Date().getTime(); 
     counter = setInterval(function() {setTime(totalSeconds);}, 1000);
     startButton.disabled = true;
@@ -230,6 +235,7 @@ var totalRest = 300;
         endButton.disabled = false;
       }
       else { // break or malformed
+        playSound('https://outwork.s3.amazonaws.com/audio/alarm')
         sessionStorage.setItem("clock", totalWork);
         sessionStorage.setItem("session", 'work');      
         $('#instructions').html('Pomodoro');  
@@ -251,6 +257,7 @@ var totalRest = 300;
 
 $('#log-result-btn').click(function() {
   var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
+  stopSound();
    $('.done').css({display: 'none'});
   if (isCompleted) {
     sessionStorage["session"] = 'break';
