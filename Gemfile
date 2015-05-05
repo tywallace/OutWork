@@ -10,7 +10,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  # gem 'puma'
+  gem 'puma'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -70,3 +70,5 @@ gem 'aws-sdk'
 gem 'omniauth-facebook', '~> 1.4.1'
 gem 'omniauth-google-oauth2', '~> 0.2.1'
 gem 'json'
+
+gem "font-awesome-rails"
