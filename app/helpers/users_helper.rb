@@ -1,12 +1,18 @@
 module UsersHelper
-
+require 'open-uri'
 
   def set_state()
   	    session[:state] = 1 if session[:state].nil?
   end
 
   def profile_pic(user)
-    "http://graph.facebook.com/#{user.uid}/picture?type=large"
+    if user.provider == "google_oauth2"
+      picture = open("https://www.googleapis.com/plus/v1/people/#{user.uid}?fields=image&key=AIzaSyDre1mrJhF1-cSjvasAT6lTauDY0O1PduM").read()
+      parsed = JSON.parse(picture)
+      status = parsed["image"]["url"]
+    else
+      "http://graph.facebook.com/#{user.uid}/picture?type=large"
+    end
   end
 
   def small_pic(user)
