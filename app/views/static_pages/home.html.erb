@@ -23,7 +23,15 @@
               <div id = "dynamicTracker">
                 <%= render 'shared/personal_tracker' %>
               </div>
-              <h2>Updates - May 2nd</h2>
+              <h2>Update - May 4th</h2>
+              <li>Timer Notification fixed</li>
+              <ul>
+                <li>The alarm will stop when you click the next button.</li>
+                <li>The alarm will sound at the end of your break. </li>
+                <li>I've heard the voices of the masses, I'm looking for a less annoying sound</li>
+              </ul>
+
+              <h2>Update - May 2nd</h2>
               <li>Timer fixes</li>
               <ul>
                 <li>The timer will now run at the proper speed (Sorry Tim!)</li>
@@ -57,6 +65,7 @@
       Using social pressure to make you more productive
     </h2> 
       <%= link_to "Join now!", "/auth/facebook", id: "sign_in", class: "btn btn-lg btn-primary" %>
+<!--        link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %> -->
   </div>
 
 <% end %>
