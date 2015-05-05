@@ -50,14 +50,6 @@
     </div>
   </div>
 <% else %>
-  <div class="center jumbotron">
-    <h1>Grasshopper</h1>
-
-    <h2>
-      Using social pressure to make you more productive
-    </h2> 
-      <%= link_to "Join now!", "/auth/facebook", id: "sign_in", class: "btn btn-lg btn-primary" %>
-  </div>
-
+  <%= render 'layouts/landing' %>
 <% end %>
 
