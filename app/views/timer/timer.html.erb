@@ -20,7 +20,13 @@
 </div>
 <br>
   <h2>Important Notice: If you leave this page while a timer is running, when you return the buttons will all be disabled. Hitting buttons after returning to the page will create multiple timers running in parallel. </h2>
+
+
 <script>
+
+window.onbeforeunload = function(){
+  return 'If you leave the page your timer will break. Are you sure you want to leave?';
+};
 
 var totalWork = 1500;
 var totalRest = 300;

@@ -23,19 +23,25 @@
               <div id = "dynamicTracker">
                 <%= render 'shared/personal_tracker' %>
               </div>
+
+              <h2>Update - May 5th</h2>
+              <li>Weekly Leaderboard</li>
+              <ul>
+                <li>How do you stack up over the whole week?</li>
+                <li>The leaderboard resets every Sunday night (I hope!). </li>
+              </ul>
+              <li>Timer fixes</li>
+              <ul>
+                <li>A warning pops up if you leave or refresh the site letting you know that you will lose the progress of your timer.</li>
+              </ul>
+
+
               <h2>Update - May 4th</h2>
               <li>Timer Notification fixed</li>
               <ul>
                 <li>The alarm will stop when you click the next button.</li>
                 <li>The alarm will sound at the end of your break. </li>
                 <li>I've heard the voices of the masses, I'm looking for a less annoying sound</li>
-              </ul>
-
-              <h2>Update - May 2nd</h2>
-              <li>Timer fixes</li>
-              <ul>
-                <li>The timer will now run at the proper speed (Sorry Tim!)</li>
-                <li>Timer will no longer break if you refresh page or leave and return to page, in order to fix this buttons are disabled upon returing.
               </ul>
             </div>
 <!--             render 'timer/timer' %> -->
@@ -48,13 +54,15 @@
     </div>
   </div>
   <div class = "row">
-    <div class = "col-md-8">
+    <div class = "col-md-7">
       <div class="scoreboard-area">
         <%= render 'shared/scoreboard' %>
       </div>
     </div>
-    <div class = "col-md-4">
-      <%= render 'shared/leaderboard' %>
+    <div class = "col-md-5">
+      <div class="scoreboard-area">
+        <%= render 'shared/leaderboard' %>
+      </div>
     </div>
   </div>
 <% else %>

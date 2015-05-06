@@ -10,6 +10,7 @@ class StaticPagesController < ApplicationController
       @users = current_user.scoreboard
       # @log = Log.new
       # @log.result = true;
+      @weekly_pomos = Log.joins(:user).group(:user).where("logs.created_at >= ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_week).order('count_all DESC').count
       
     end
   end

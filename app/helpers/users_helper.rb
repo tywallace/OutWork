@@ -33,4 +33,12 @@ require 'open-uri'
   def todays_pomos(user)
       todays_pomos = Log.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).count
   end
+
+  #Weekly Leader
+  def weekly_pomos(user)
+  #    posts_per_user_count = Log.joins(:user).group(:user).order('count_all DESC').limit(10).count
+  #    weekly_pomos = Log.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_week, user.id).order('count_all ASC').count
+  
+  end
+
 end
