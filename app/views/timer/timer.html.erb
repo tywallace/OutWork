@@ -1,3 +1,5 @@
+<% provide(:title, 'Timer') %>
+
 <div id="instructions"></div>
 
 <div id="timer"></div>
@@ -28,8 +30,8 @@ window.onbeforeunload = function(){
   return 'If you leave the page your timer will break. Are you sure you want to leave?';
 };
 
-var totalWork = 1500;
-var totalRest = 300;
+var totalWork = 1500; /* 1500 */
+var totalRest = 300; /* 300 */
 
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
    <button type="button" id="pause" class="btn btn-info">Pause</button>\
@@ -41,45 +43,6 @@ var totalRest = 300;
  $('#instructions').html('<span id="current-segment">Pomodoro</span>');
 
  $('#timer').html(displayTime(sessionStorage.getItem('clock')), clock(sessionStorage.getItem('session'), sessionStorage.getItem('clock')));
-
-// if(sessionStorage.getItem('session') == 'break' && sessionStorage.getItem('clock') > 0) {
-//     $('#instructions').html('Break');
-//     $('#timer').html('',clock('break'));
-//     $('#work-buttons').css({display:'none'});        
-//     $('#rest-buttons').css({display:'block'});
-// }
-
-// else if(sessionStorage.getItem('session') == 'break' && sessionStorage.getItem('clock') == 0) {
-//     $('#instructions').html('Pomodoro');
-//     $('#timer').html('25:00', clock('work'));
-//     $('#work-buttons').css({display:'block'});        
-//     $('#rest-buttons').css({display:'none'});
-// }
-
-// else if(sessionStorage.getItem('session') == 'work' && sessionStorage.getItem('clock') > 0) {
-//     $('#instructions').html('Pomodoro');
-//     $('#timer').html('', clock('work'));
-//     $('#work-buttons').css({display:'block'});        
-//     $('#rest-buttons').css({display:'none'});
-//     $('#resume').click();
-// }
-
-// else if(sessionStorage.getItem('session') == 'work' && sessionStorage.getItem('clock') == 0) {
-//     $('#instructions').html('Pomodoro');
-//     $('#timer').html('', clock('work'));
-//     $('#work-buttons').css({display:'block'});        
-//     $('#rest-buttons').css({display:'none'});
-//     $('#start').click();
-// }
-
-// else {
-//     $('#instructions').html('Pomodoro');
-//     $('#timer').html('', clock('work'));
-//     $('#work-buttons').css({display:'block'});        
-//     $('#rest-buttons').css({display:'none'});
-//     // $('#start').click();
-// }
-
 
 
  function playSound(filename){   
@@ -98,6 +61,14 @@ function stopSound(){
     else { document.getElementById('timer').innerHTML = '00:00';
     }
   }
+
+   function titleTime(timeLeft) {
+    if (timeLeft > 0){
+    var seconds = timeLeft % 60, minutes = Math.floor(timeLeft / 60);
+    title = pad(minutes) + ':' + pad(seconds);
+    return title;
+    }
+  }  
 
   function pad(val) {
     var valString = val + ""; 
@@ -178,8 +149,11 @@ function stopSound(){
 
   pauseButton.onclick = function() {
       stop();
+      startButton.disabled = true;
       pauseButton.disabled = true;
       resumeButton.disabled = false;
+      resetButton.disabled = false;
+
   };
 
   resumeButton.onclick = function() {
@@ -187,8 +161,11 @@ function stopSound(){
       var timeremaining = sessionStorage.getItem('clock');
       starttime = new Date().getTime();
       counter = setInterval(function() {setTime(timeremaining);}, 1000);
+      startButton.disabled = true;
       pauseButton.disabled = false;
       resumeButton.disabled = true;
+      resetButton.disabled = false;
+
 
   };
 
@@ -199,6 +176,7 @@ function stopSound(){
       sessionStorage["clock"] = totalSeconds;
       startButton.disabled = false;
       pauseButton.disabled = true;
+      resumeButton.disabled = true;
       resetButton.disabled = true;
   };
 
@@ -222,6 +200,7 @@ function stopSound(){
       sessionStorage.setItem("clock", timer);
       sessionStorage.setItem("session", segment);
       displayTime(timer);
+      document.title = "Grasshopper | " + titleTime(timer);
     }
     else {
       stop();
@@ -232,6 +211,7 @@ function stopSound(){
     if (timer <= 0) {
       stop();
       pauseButton.disabled = true;
+      document.title = "Grasshopper | Alarming!";
       if (segment === 'work') {
         playSound('https://outwork.s3.amazonaws.com/audio/alarm')
         $('.done').css({display: 'block'});

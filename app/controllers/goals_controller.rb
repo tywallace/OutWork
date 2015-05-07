@@ -7,6 +7,10 @@ class GoalsController < ApplicationController
 	    if @goal.save
 	      flash[:success] = "Goal created!"
 	      redirect_to root_url
+	    elsif @goal.content.length > 25
+	      @goal = []
+	      flash[:danger] = "Your message is too long (Max 25 characters)"
+	      redirect_to root_url
 	    else
 	      @goal = []
 	      flash[:danger] = "Give yourself a goal"
@@ -25,6 +29,6 @@ class GoalsController < ApplicationController
 	private
 
 	def goal_params
-      params.require(:goal).permit(:content)
+      params.require(:goal).permit(:content, :number)
     end
 end

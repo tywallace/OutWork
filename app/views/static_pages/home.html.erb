@@ -12,7 +12,7 @@
               render 'shared/micropost_form' %>
              </section> -->
       </aside>
-        <% if todays_goal(current_user) == "No Goal" %>
+        <% if todays_goal(current_user) == "Not Active" %>
             <aside class="col-md-4">
               <section class="goal_form">
                 <%= render 'shared/goal_form' %>
@@ -23,29 +23,25 @@
               <div id = "dynamicTracker">
                 <%= render 'shared/personal_tracker' %>
               </div>
-
-              <h2>Update - May 5th</h2>
-              <li>Weekly Leaderboard</li>
-              <ul>
-                <li>How do you stack up over the whole week?</li>
-                <li>The leaderboard resets every Sunday night (I hope!). </li>
-              </ul>
-              <li>Timer fixes</li>
-              <ul>
-                <li>A warning pops up if you leave or refresh the site letting you know that you will lose the progress of your timer.</li>
-              </ul>
-
-
-              <h2>Update - May 4th</h2>
-              <li>Timer Notification fixed</li>
-              <ul>
-                <li>The alarm will stop when you click the next button.</li>
-                <li>The alarm will sound at the end of your break. </li>
-                <li>I've heard the voices of the masses, I'm looking for a less annoying sound</li>
-              </ul>
             </div>
-<!--             render 'timer/timer' %> -->
         <% end %>
+
+        <div class = "col-md-8">
+          <h2>Update - May 6th</h2>
+          <li>Goal Split into 2 Parts</li>
+          <ul>
+            <li>An integer of your actual pomodoro goal (to allow for analytics later). Choose 0 if you don't want to be held to anything.</li>
+            <li>A place for you to talk some smack (max 25 chars) </li>
+          </ul>
+          <li>Timer Update</li>
+          <ul>
+            <li>The title of the tab will now have the timer in it and signal when your time is done to help those without audio.</li>
+            <li>A few button enable/disable changes to clean up the interface</li>
+          </ul>
+        </div>
+
+
+<!--             render 'timer/timer' %> -->
 
   <!--     <div class="col-md-8">
         <h3>Micropost Feed</h3>
@@ -54,12 +50,12 @@
     </div>
   </div>
   <div class = "row">
-    <div class = "col-md-7">
+    <div class = "col-md-8">
       <div class="scoreboard-area">
         <%= render 'shared/scoreboard' %>
       </div>
     </div>
-    <div class = "col-md-5">
+    <div class = "col-md-4">
       <div class="scoreboard-area">
         <%= render 'shared/leaderboard' %>
       </div>

@@ -23,9 +23,21 @@ require 'open-uri'
   def todays_goal(user)
     goal = Goal.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).last
     if goal.nil?
-    	todays_goal = "No Goal"
-    else
-    	todays_goal = goal.content
+      return "Not Active"
+    elsif goal.number == 0
+      return todays_goal = "-"      
+    else 
+    	return goal.number
+    end
+  end
+
+  #Return a user's trash talk
+  def todays_status(user)
+    goal = Goal.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).last
+    if goal.nil?
+      return nil      
+    else 
+      return " | " + goal.content
     end
   end
 

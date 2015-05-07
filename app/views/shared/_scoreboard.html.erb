@@ -5,7 +5,7 @@
            <% @users.each do |user| %>
            <tr>
               <td>  <%= link_to user.name, user %> </td>
-              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> </td>
+              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> <%= todays_status(user) %></td>
             </tr>
            <%end %>
 </table>
