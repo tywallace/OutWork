@@ -1,4 +1,5 @@
 <% if logged_in? %>
+
   <div class="main-profile">
     <div class="row">
       <aside class="col-md-4">
@@ -12,33 +13,34 @@
               render 'shared/micropost_form' %>
              </section> -->
       </aside>
-        <% if todays_goal(current_user) == "Not Active" %>
-            <aside class="col-md-4">
-              <section class="goal_form">
-                <%= render 'shared/goal_form' %>
-              </section>
-            </aside>
-        <% else %>
-            <div class="col-md-8">
-              <div id = "dynamicTracker">
-                <%= render 'shared/personal_tracker' %>
-              </div>
-            </div>
-        <% end %>
+        
 
         <div class = "col-md-8">
-          <h2>Update - May 6th</h2>
-          <li>Goal Split into 2 Parts</li>
+          <% if todays_goal(current_user) == "Not Active Today" %>  
+            <section class="goal_form">
+              <%= render 'shared/goal_form' %>
+            </section>
+        <% else %>
+
+            <div id = "dynamicTracker">
+              <%= render 'shared/personal_tracker' %>
+            </div>
+          </div>
+        <% end %>
+        <div class = "col-md-8">
+          <h2>Update - May 7th</h2>
+          <li>Goal Fixes</li>
           <ul>
-            <li>An integer of your actual pomodoro goal (to allow for analytics later). Choose 0 if you don't want to be held to anything.</li>
-            <li>A place for you to talk some smack (max 25 chars) </li>
+            <li>Sorry for making a comment required. That was an accident.</li>
+            <li>As you can see I made a pretty(ish...) pop up to record your goals. I know it might be annoying but for now if you don't want a goal can you enter 0?</li>
           </ul>
-          <li>Timer Update</li>
+          <li>Warning Pop Up</li>
           <ul>
-            <li>The title of the tab will now have the timer in it and signal when your time is done to help those without audio.</li>
-            <li>A few button enable/disable changes to clean up the interface</li>
+            <li>I removed this, it was only supposed to be on the timer page but it is everyone, I'm not sure why.</li>
           </ul>
+
         </div>
+      </div>
 
 
 <!--             render 'timer/timer' %> -->
@@ -47,7 +49,6 @@
         <h3>Micropost Feed</h3>
         render 'shared/feed' %> 
       </div> -->
-    </div>
   </div>
   <div class = "row">
     <div class = "col-md-8">
@@ -64,4 +65,3 @@
 <% else %>
   <%= render 'layouts/landing' %>
 <% end %>
-
