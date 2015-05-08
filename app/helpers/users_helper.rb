@@ -36,7 +36,9 @@ require 'open-uri'
     goal = Goal.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).last
     if goal.nil?
       return nil      
-    else 
+    elsif goal.content == ""
+      return nil
+    else
       return " | " + goal.content
     end
   end
