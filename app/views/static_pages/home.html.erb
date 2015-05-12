@@ -9,8 +9,8 @@
         <section class="stats">
           <%= render 'shared/stats' %>
         </section>
-  <!--       <section class="micropost_form">
-              render 'shared/micropost_form' %>
+ <!--  <section class="micropost_form">
+              <%= render 'shared/micropost_form' %>
              </section> -->
       </aside>
         
@@ -22,46 +22,76 @@
             </section>
         <% else %>
 
-            <div id = "dynamicTracker">
+            <div class = "counter">
+              <div id = "personal_tracker">
               <%= render 'shared/personal_tracker' %>
+              </div>
             </div>
           </div>
         <% end %>
-        <div class = "col-md-8">
-          <h2>Update - May 7th</h2>
-          <li>Goal Fixes</li>
-          <ul>
-            <li>Sorry for making a comment required. That was an accident.</li>
-            <li>As you can see I made a pretty(ish...) pop up to record your goals. I know it might be annoying but for now if you don't want a goal can you enter 0?</li>
-          </ul>
-          <li>Warning Pop Up</li>
-          <ul>
-            <li>I removed this, it was only supposed to be on the timer page but it is everyone, I'm not sure why.</li>
-          </ul>
-
-        </div>
-      </div>
+              <%= render 'timer/timer' %>
+    </div>
 
 
-<!--             render 'timer/timer' %> -->
 
-  <!--     <div class="col-md-8">
+
+
+<!--       <div class="col-md-8">
         <h3>Micropost Feed</h3>
-        render 'shared/feed' %> 
-      </div> -->
-  </div>
+        <%= render 'shared/feed' %> 
+      </div> --> 
+  
   <div class = "row">
     <div class = "col-md-8">
       <div class="scoreboard-area">
-        <%= render 'shared/scoreboard' %>
+        <div id="scoreboard">
+          <%= render 'shared/scoreboard' %>
+        </div>
       </div>
     </div>
     <div class = "col-md-4">
       <div class="scoreboard-area">
-        <%= render 'shared/leaderboard' %>
+        <div id="leaderboard">
+          <%= render 'shared/leaderboard' %>
+        </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class = "col-md-12">
+      <h2>Update - May 11th</h2>
+      <li>The Timer Has a New Home</li>
+      <ul>
+        <li>The timer now lives on the home page so no more going back and forth.</li>
+        <li>When you submit your pomodoro, the scoreboard, leaderboard and your personal tracker will update so you can see how everyone else is doing.</li>
+      </ul>
+      <li>Warning Message is Back</li>
+      <ul>
+        <li>Since we only have 1 real page at this point I put the warning message back on.</li>
+      </ul>
+    </div>
+  </div>
+
 <% else %>
   <%= render 'layouts/landing' %>
 <% end %>
+
+<!-- 
+<script>
+function executeQuery() {
+  $.ajax({
+    //url: '/index',
+    success: function(data) {
+      $('#personal_tracker').load('/ #personal_tracker');
+      $('#scoreboard').load('/ #scoreboard');
+      $('#leaderboard').load('/ #leaderboard');
+    }
+  });
+  setTimeout(executeQuery, 30000);
+}
+
+$(document).ready(function() {
+  setTimeout(executeQuery, 30000);
+});
+
+</script> -->

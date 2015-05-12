@@ -1,47 +1,37 @@
+<div class="col-md-8">
+
+  <div id="instructions"></div>
+
+  <div id="timer"></div>
+  <div id="sound"></div>
+
+  <div id="work-buttons"></div>
+  <div id="rest-buttons" style="display:none"></div>
 
 
 
-<!-- Not currently being used -->
+  <div id="done" style="display:none">
 
 
+    <!-- Display 'How did you do?' form -->
 
-<% provide(:title, 'Timer') %>
+    <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
+      <%=      f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info", id: "log-result-input", as: :radio_buttons %>
+      <%= f.button :submit, value: "Log results", class: "btn btn-info", id: "log-result-btn" %>
+    <% end %>
+  </div>
+  <br>
+  Note: If the buttons get disabled from leaving the page and coming back, try refreshing.
 
-<div id = "personal_tracker">
-  <%= render 'shared/personal_tracker' %>
 </div>
-<div id="instructions"></div>
-
-<div id="timer"></div>
-<div id="sound"></div>
-
-<div id="work-buttons"></div>
-<div id="rest-buttons" style="display:none"></div>
-
-
-
-<div class="done" style="display:none">
-
-
-  <!-- Display 'How did you do?' form -->
-
-  <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
-    <%=      f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info", id: "log-result-input", as: :radio_buttons %>
-    <%= f.button :submit, value: "Log results", class: "btn btn-info", id: "log-result-btn" %>
-  <% end %>
-</div>
-<br>
-  <h2>Important Notice: If you leave this page while a timer is running, when you return the buttons will all be disabled. Hitting buttons after returning to the page will create multiple timers running in parallel. </h2>
-
-
 <script>
 
-// window.onbeforeunload = function(){
-//   return 'If you leave the page your timer will break. Are you sure you want to leave?';
-// };
+window.onbeforeunload = function(){
+  return 'If you leave the page your timer will break. Are you sure you want to leave?';
+};
 
-var totalWork = 5; /* 1500 */
-var totalRest = 5; /* 300 */
+var totalWork = 1500; /* 1500 */
+var totalRest = 300; /* 300 */
 
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
    <button type="button" id="pause" class="btn btn-info">Pause</button>\
@@ -131,7 +121,7 @@ function stopSound(){
 
   else if (segment == 'work' && timeremaining == 0) {
     displayTime(timeremaining);
-    $('.done').css({display: 'block'});
+    $('#done').css({display: 'block'});
     $('#work-buttons').css({display:'none'});        
     $('#rest-buttons').css({display:'none'});
   }
@@ -224,7 +214,7 @@ function stopSound(){
       document.title = "Grasshopper | Alarming!";
       if (segment === 'work') {
         playSound('https://outwork.s3.amazonaws.com/audio/alarm')
-        $('.done').css({display: 'block'});
+        $('#done').css({display: 'block'});
         displayTime(timer);
         $('#work-buttons').css({display:'none'});        
         $('#rest-buttons').css({display:'none'});
@@ -254,7 +244,7 @@ function stopSound(){
 $('#log-result-btn').click(function() {
   var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
   stopSound();
-   $('.done').css({display: 'none'});
+   $('#done').css({display: 'none'});
   if (isCompleted) {
     sessionStorage["session"] = 'break';
     sessionStorage["clock"] = totalRest;
@@ -267,7 +257,9 @@ $('#log-result-btn').click(function() {
     // Update the counter
     $.ajax({
       success: function(data) {
-        $('#personal_tracker').load('/timer #personal_tracker')
+        $('#personal_tracker').load('/ #personal_tracker');
+        $('#scoreboard').load('/ #scoreboard');
+        $('#leaderboard').load('/ #leaderboard');
       }
     });
   } else {

@@ -5,7 +5,6 @@ class LogsController < ApplicationController
 		is_completed = params[:log][:result] unless params[:log].nil?
 
 		if is_completed == "true"
-			# TODO: Log.new also called in Timer controller
 			@log = Log.new(log_create_params)
 			if @log.save
 				current_user.logs << @log
