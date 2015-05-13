@@ -2,9 +2,10 @@ class LogsController < ApplicationController
 
 	# Process 'Log results' form
 	def create
-		is_completed = params[:log][:result] unless params[:log].nil?
+		is_completed = params[:log][:result] 
+		# unless params[:log].nil?
 
-		if is_completed == "true"
+		if is_completed == "Yes"
 			@log = Log.new(log_create_params)
 			if @log.save
 				current_user.logs << @log
@@ -21,7 +22,7 @@ class LogsController < ApplicationController
 	def log_create_params
 		params.require(:log).permit(:result)
 	end
-	def log_update_result_params
-		params.require(:log)
-	end
+	# def log_update_result_params
+	# 	params.require(:log)
+	# end
 end

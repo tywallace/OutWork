@@ -363,7 +363,7 @@ aside {
 
 /* forms */
 
-input, textarea, select, .uneditable-input {
+textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
@@ -494,15 +494,14 @@ span.picture {
   padding: 20px;
 }
 
-#work-buttons, #rest-buttons {
+#work-buttons, #rest-buttons, #done-buttons {
   text-align: center;
-  font-size: 32px;
   padding: 10px;
 }
 
-/*.highlight{
-  background-color: #c0deff;
-}*/
+#warning-message {
+  text-align: center;
+}
 
 .counter-area{
   margin-right: 12px;

@@ -10,18 +10,20 @@
 
 
 
-  <div id="done" style="display:none">
+  <div id="done-buttons" style="display:none">
 
 
     <!-- Display 'How did you do?' form -->
 
     <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
-      <%=      f.input :result, value: "Completd my Pomodoro", label: "Completed my Pomodoro?", class: "btn btn-info", id: "log-result-input", as: :radio_buttons %>
-      <%= f.button :submit, value: "Log results", class: "btn btn-info", id: "log-result-btn" %>
+       <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-info", id: "yes-result-btn" %>
+       <%= f.submit value: "No", name:"[log][result]", class: "btn btn-info", id: "no-result-btn" %>
     <% end %>
   </div>
   <br>
-  Note: If the buttons get disabled from leaving the page and coming back, try refreshing.
+  <div id="warning-message">
+    Note: If the buttons get disabled from leaving the page and coming back, try refreshing.
+  </div>
 
 </div>
 <script>
@@ -84,7 +86,7 @@ function stopSound(){
   // initialize
 
   var totalSeconds = segment === 'break' ? totalRest : totalWork;
-  var timer = timeremaining, counter, starttime, startButton = document.getElementById('start'), pauseButton = document.getElementById('pause'), resumeButton = document.getElementById('resume'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
+  var timer = timeremaining, counter, starttime, ended = "no", startButton = document.getElementById('start'), pauseButton = document.getElementById('pause'), resumeButton = document.getElementById('resume'), resetButton = document.getElementById('reset'), endButton = document.getElementById('end');
 
 
   if (segment === null) {
@@ -121,7 +123,7 @@ function stopSound(){
 
   else if (segment == 'work' && timeremaining == 0) {
     displayTime(timeremaining);
-    $('#done').css({display: 'block'});
+    $('#done-buttons').css({display: 'block'});
     $('#work-buttons').css({display:'none'});        
     $('#rest-buttons').css({display:'none'});
   }
@@ -139,8 +141,9 @@ function stopSound(){
 
   startButton.onclick = function() {
     stopSound();
-    starttime = new Date().getTime(); 
-    counter = setInterval(function() {setTime(totalSeconds);}, 1000);
+    starttime = new Date().getTime();
+    ended = "no"; 
+    counter = setInterval(function() {setTime(totalSeconds, ended);}, 1000);
     startButton.disabled = true;
     pauseButton.disabled = false;
     resumeButton.disabled = true;
@@ -160,7 +163,8 @@ function stopSound(){
       // stop();
       var timeremaining = sessionStorage.getItem('clock');
       starttime = new Date().getTime();
-      counter = setInterval(function() {setTime(timeremaining);}, 1000);
+      ended = "no";
+      counter = setInterval(function() {setTime(timeremaining, ended);}, 1000);
       startButton.disabled = true;
       pauseButton.disabled = false;
       resumeButton.disabled = true;
@@ -182,9 +186,10 @@ function stopSound(){
 
   endButton.onclick = function() {
     stop();   
-    timer = 0;      
+    timer = 0;
+    ended = "yes";      
     displayTime(timer);
-    setTime(timer);
+    setTime(timer, ended);
     startButton.disabled = false;
     pauseButton.disabled = true;
     resetButton.disabled = true;
@@ -192,7 +197,7 @@ function stopSound(){
 
   }
 
-  function setTime(numSeconds) {
+  function setTime(numSeconds, ended) {
     if(numSeconds > 0) {
       var now = new Date().getTime();
       var counted = now-starttime;
@@ -214,14 +219,16 @@ function stopSound(){
       document.title = "Grasshopper | Alarming!";
       if (segment === 'work') {
         playSound('https://outwork.s3.amazonaws.com/audio/alarm')
-        $('#done').css({display: 'block'});
+        $('#done-buttons').css({display: 'block'});
         displayTime(timer);
         $('#work-buttons').css({display:'none'});        
         $('#rest-buttons').css({display:'none'});
         endButton.disabled = false;
       }
       else { // break or malformed
-        playSound('https://outwork.s3.amazonaws.com/audio/alarm')
+        if (ended != "yes") {
+          playSound('https://outwork.s3.amazonaws.com/audio/alarm')
+        }
         sessionStorage.setItem("clock", totalWork);
         sessionStorage.setItem("session", 'work');      
         $('#instructions').html('Pomodoro');  
@@ -241,11 +248,10 @@ function stopSound(){
   }
 }
 
-$('#log-result-btn').click(function() {
-  var isCompleted = $('input[name="log[result]"]:checked').val() === 'true';
+$('#yes-result-btn').click(function() {
   stopSound();
-   $('#done').css({display: 'none'});
-  if (isCompleted) {
+   $('#done-buttons').css({display: 'none'});
+
     sessionStorage["session"] = 'break';
     sessionStorage["clock"] = totalRest;
     $('#instructions').html('Break');
@@ -262,13 +268,15 @@ $('#log-result-btn').click(function() {
         $('#leaderboard').load('/ #leaderboard');
       }
     });
-  } else {
+});
+
+$('#no-result-btn').click(function() {
+  stopSound();
+   $('#done-buttons').css({display: 'none'});
     sessionStorage["session"] = 'work';
     sessionStorage["clock"] = totalWork;
     $('#timer').html(displayTime(totalWork), clock('work', totalWork));
     $('#work-buttons').css({display:'block'});        
     $('#rest-buttons').css({display:'none'});
-  }
 });
-
 </script>
