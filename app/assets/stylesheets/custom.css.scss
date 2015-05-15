@@ -363,7 +363,7 @@ aside {
 
 /* forms */
 
-textarea, select, .uneditable-input {
+input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
@@ -497,6 +497,10 @@ span.picture {
 #work-buttons, #rest-buttons, #done-buttons {
   text-align: center;
   padding: 10px;
+}
+
+#timer-interface .btn{
+  width: 100px;
 }
 
 #warning-message {
