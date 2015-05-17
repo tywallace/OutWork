@@ -16,6 +16,8 @@
     <!-- Display 'How did you do?' form -->
 
     <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
+      <%= f.label :tag_list, "Tags (separated by commas)" %><br />
+      <%= f.text_field :tag_list %>
        <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-info", id: "yes-result-btn" %>
        <%= f.submit value: "No", name:"[log][result]", class: "btn btn-info", id: "no-result-btn" %>
     <% end %>
@@ -32,8 +34,8 @@
 //   return 'If you leave the page your timer will break. Are you sure you want to leave?';
 // };
 
-var totalWork = 1500; /* 1500 */
-var totalRest = 300; /* 300 */
+var totalWork = 5; /* 1500 */
+var totalRest = 5; /* 300 */
 
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
    <button type="button" id="pause" class="btn btn-info">Pause</button>\

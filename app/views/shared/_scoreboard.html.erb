@@ -2,7 +2,7 @@
           <tr>
             <td><h3> Daily Scoreboard </h3></td>
           </tr>
-           <% @users.each do |user| %>
+           <% @active_users.each do |user| %>
            <tr>
               <td>  <%= link_to user.name, user %> </td>
               <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> <%= todays_status(user) %></td>

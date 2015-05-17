@@ -11,7 +11,7 @@ require 'open-uri'
       parsed = JSON.parse(picture)
       status = parsed["image"]["url"]
     else
-      "http://graph.facebook.com/#{user.uid}/picture?type=large"
+      "http://graph.facebook.com/#{user.uid}/picture?width=150&height=150"
     end
   end
 
@@ -46,13 +46,6 @@ require 'open-uri'
     #Return a count of the user's pomodoros
   def todays_pomos(user)
       todays_pomos = Log.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).count
-  end
-
-  #Weekly Leader
-  def weekly_pomos(user)
-  #    posts_per_user_count = Log.joins(:user).group(:user).order('count_all DESC').limit(10).count
-  #    weekly_pomos = Log.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_week, user.id).order('count_all ASC').count
-  
   end
 
 end

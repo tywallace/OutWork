@@ -79,6 +79,18 @@ class User < ActiveRecord::Base
 #     reset_sent_at < 2.hours.ago
 #   end
 
+  #return a list of active users
+  def active_daily
+    active = User.joins(:logs).where("logs.created_at >= ?", 
+                     Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day).uniq  
+
+    # active = User.includes(:logs).where("created_at >= ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day)
+    # (logs: {:created_at => Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day})
+    # active = Log.select("user_id").where("created_at >= ?", 
+    #                 Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day).uniq
+    # User.where("user_id IN ?", active)
+  end
+
   # Returns a user's status feed.
   def feed
     following_ids = "SELECT followed_id FROM relationships
@@ -90,9 +102,9 @@ class User < ActiveRecord::Base
   def scoreboard
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-    User.all
-    # User.where("id IN (#{following_ids})
-    #                  OR id = :user_id", user_id: id)            
+    # User.all
+    User.where("id IN (#{following_ids})
+                     OR id = :user_id", user_id: id)            
   end
 
   # Follows a user.

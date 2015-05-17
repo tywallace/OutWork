@@ -8,6 +8,7 @@ class StaticPagesController < ApplicationController
       @logs = current_user.logs.order("created_at DESC").where("result IS NOT NULL").all
       @goal = current_user.goals.build
       @users = current_user.scoreboard
+      @active_users = current_user.active_daily
       @weekly_pomos = Log.joins(:user).group(:user).where("logs.created_at >= ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_week).order('count_all DESC').count
       @log = Log.new
       @log.result = true;

@@ -1,5 +1,7 @@
 class Log < ActiveRecord::Base
+  acts_as_taggable
   belongs_to :user
+
 
   # validates :task, presence: true, on: :create
   # validates :result, presence: true, on: :update
