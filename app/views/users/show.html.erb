@@ -6,17 +6,16 @@
      <!-- render 'logs/log' -->
   </div>
   <div class="row">
-    <aside class="col-md-4">
-      <section>
-        <h1>
-          <%= image_tag(profile_pic @user)%>
-          <%= @user.name %>
-        </h1>
-      </section>
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>
-    </aside>
+      <div class ="user_profile">
+        <section>
+          
+            <%= image_tag(profile_pic @user)%>
+          <h1><%= @user.name %></h1>
+        </section>
+        <section class="stats">
+          <%= render 'shared/stats' %>
+        </section>
+      </div>
     <!-- <div class="col-md-8">
       <%= render 'follow_form' if logged_in? %>
       <% if @user.microposts.any? %>
@@ -27,33 +26,32 @@
          will_paginate @microposts %>
       <% end %>
     </div> -->
-    <div id="feed">
+    <div id = "log_feed">
     <% if @logs %>
-      <% @logs.each do |l| %>
-        <% if !l.next && l.created_at.to_date == Date.today %>
-          <div class="row" id="today">
-            <div class="col-sm-4 col-sm-offset-4 text-center">
-              <p class="text-muted">Today</p>
-            </div>
-          </div>
-        <% elsif (l.next && l.next.created_at.to_date != l.created_at.to_date) || !l.next %>
+      <% Date.today.downto(Date.new(2015, 04, 30)) do |date| %>
+        <% if log_count(date, @user.id) > 1 %>
           <div class="row">
             <div class="col-sm-4 col-sm-offset-4 text-center">
-              <p class="text-muted"><%= l.created_at.strftime("%B %e, %Y") %></p>
+              <p class="text-muted"><% if date == Date.today %>Today<% else %> <%= date %><% end %></p>
             </div>
           </div>
-        <% end %>
-        <div class="feed-item">
           <div class="row">
             <div class="col-sm-5 col-sm-offset-1">
-              <p class="task-feed text-danger"><%= raw(l.tag_list.map { |t| link_to t, tag_path(@user.id, t) }.join(', ')) %></p>
+              <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <% goal_count(date, @user.id).each do |goal| %>
+                <%= goal.number %>
+                <% end %> 
+              </p>
+              <% daily_tags(date, @logs).each do |key, value| %>
+                <%= link_to "#{key}", tag_path(@user.id, "#{key}") %>
+                <%= "(#{value})" %>
+              <% end %>
             </div>
           </div>
           <hr>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
-  </div>
+    </div>
   </div>
 </div>
 

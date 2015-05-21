@@ -1,11 +1,16 @@
-<table class = "scoreboard">
-          <tr>
-            <td><h3> Daily Scoreboard </h3></td>
-          </tr>
-           <% @active_users.each do |user| %>
-           <tr>
-              <td>  <%= link_to user.name, user %> </td>
-              <td>  <%= todays_pomos(user) %> / <%= todays_goal(user) %> <%= todays_status(user) %></td>
-            </tr>
-           <%end %>
-</table>
+<h3> The Daily Board </h3>
+<div class = "scoreboard">
+	<ol class = "scoreboard-list">
+		<% @active_users.each do |user| %>
+		<li class="user">
+			<%= image_tag(small_pic(user), :class=>"circle_pic") %>
+			<%= link_to user.name, user, {:class=>"name"} %>
+			<%= log_count(Date.today, user) %> / 
+	  		<% goal_count(Date.today, user).each do |goal| %>
+        		<%= goal.number %>
+        	<% end %>
+        	<%= todays_status(user) %>
+		</li>
+		<% end %>
+	</ol>
+</div>

@@ -1,104 +1,73 @@
 <% if logged_in? %>
-  <div class="main-profile">
-    <div class="row">
-      <aside class="col-md-4">
-        <section class="user_info">
-          <%= render 'shared/user_info' %>
-        </section>
-        <section class="stats">
-          <%= render 'shared/stats' %>
-        </section>
- <!--  <section class="micropost_form">
-              <%= render 'shared/micropost_form' %>
-             </section> -->
-      </aside>
-        
+  <div class="container">
+    <div>
+      <%= render 'shared/patch_notes' %>
+    </div>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+    <div class="main-profile">
+      <div class="row">
+        <div class = "timer_profile">
+          <section class="user_info">
+            <%= render 'shared/user_info' %>
+          </section>
+          <section class="stats">
+            <%= render 'shared/stats' %>
+          </section>
+          <br>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#patchModal">
+              Patch Notes
+            </button>
 
-        <div class = "col-md-8">
-          <% if todays_goal(current_user) == "Not Active Today" %>  
-            <section class="goal_form">
-              <%= render 'shared/goal_form' %>
-            </section>
-        <% else %>
+        </div>
+   <!--  <section class="micropost_form">
+                <%= render 'shared/micropost_form' %>
+               </section> -->
 
-            <div class = "counter">
-              <div id = "personal_tracker">
-              <%= render 'shared/personal_tracker' %>
+
+          <div class = "col-md-12">
+            <% if todays_goal(current_user) == "Not Active Today" %>  
+              <div class="goal_form">
+                <%= render 'shared/goal_form' %>
+              </div>
+          <% else %>
+
+              <div class = "counter">
+                <div id = "personal_tracker">
+                <%= render 'shared/personal_tracker' %>
+                </div>
               </div>
             </div>
+          <% end %>
+        <%= render 'timer/timer' %>
+      </div>
+    </div>
+
+
+
+  <!--       <div class="col-md-8">
+          <h3>Micropost Feed</h3>
+          <%= render 'shared/feed' %> 
+        </div> --> 
+    
+    <div class = "row">
+      <div class = "col-md-8">
+        <div class="scoreboard-area">
+          <div id="scoreboard">
+            <%= render 'shared/scoreboard' %>
           </div>
-        <% end %>
-              <%= render 'timer/timer' %>
-    </div>
-
-
-
-
-
-<!--       <div class="col-md-8">
-        <h3>Micropost Feed</h3>
-        <%= render 'shared/feed' %> 
-      </div> --> 
-  
-  <div class = "row">
-    <div class = "col-md-8">
-      <div class="scoreboard-area">
-        <div id="scoreboard">
-          <%= render 'shared/scoreboard' %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <div class="scoreboard-area">
+          <div id="leaderboard">
+            <%= render 'shared/leaderboard' %>
+          </div>
         </div>
       </div>
     </div>
-    <div class = "col-md-4">
-      <div class="scoreboard-area">
-        <div id="leaderboard">
-          <%= render 'shared/leaderboard' %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class = "col-md-12">
-      <h2>Update - May 12th</h2>
-      <li>No More Radial Buttons!</li>
-      <ul>
-        <li>Click yes or no, simple as that</li>
-      </ul>
-      <li>Adjusted alarm - if you end your break yourself, you don't have to hear it.</li>
-
-
-      <h2>Update - May 11th</h2>
-      <li>The Timer Has a New Home</li>
-      <ul>
-        <li>The timer now lives on the home page so no more going back and forth.</li>
-        <li>When you submit your pomodoro, the scoreboard, leaderboard and your personal tracker will update so you can see how everyone else is doing.</li>
-      </ul>
-      <!-- <li>Warning Message is Back</li>
-      <ul>
-        <li>Since we only have 1 real page at this point I put the warning message back on.</li>
-      </ul> -->
-    </div>
-  </div>
-
+</div>
 <% else %>
   <%= render 'layouts/landing' %>
 <% end %>
-
-<!-- 
-<script>
-function executeQuery() {
-  $.ajax({
-    //url: '/index',
-    success: function(data) {
-      $('#personal_tracker').load('/ #personal_tracker');
-      $('#scoreboard').load('/ #scoreboard');
-      $('#leaderboard').load('/ #leaderboard');
-    }
-  });
-  setTimeout(executeQuery, 30000);
-}
-
-$(document).ready(function() {
-  setTimeout(executeQuery, 30000);
-});
-
-</script> -->

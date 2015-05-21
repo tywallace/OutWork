@@ -1,4 +1,4 @@
-<div class="col-md-8" id = "timer-interface">
+<div class="col-md-12" id = "timer-interface">
 
   <div id="instructions"></div>
 
@@ -16,10 +16,12 @@
     <!-- Display 'How did you do?' form -->
 
     <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
-      <%= f.label :tag_list, "Tags (separated by commas)" %><br />
-      <%= f.text_field :tag_list %>
-       <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-info", id: "yes-result-btn" %>
-       <%= f.submit value: "No", name:"[log][result]", class: "btn btn-info", id: "no-result-btn" %>
+      <%= f.label :tag_list, "Tags (optional, separated by commas)" %><br />
+      <div class="tag_input">
+        <%= f.text_field :tag_list, class: "form-control" %>
+      </div>
+       <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-success", id: "yes-result-btn" %>
+       <%= f.submit value: "No", name:"[log][result]", class: "btn btn-danger", id: "no-result-btn" %>
     <% end %>
   </div>
   <br>
@@ -37,12 +39,12 @@
 var totalWork = 5; /* 1500 */
 var totalRest = 5; /* 300 */
 
- $('#work-buttons').html('<button type="button" id="start" class="btn btn-info">Start</button>\
-   <button type="button" id="pause" class="btn btn-info">Pause</button>\
-   <button type="button" id="resume" class="btn btn-info">Resume</button>\
-   <button type="button" id="reset" class="btn btn-info">Reset</button>');
+ $('#work-buttons').html('<button type="button" id="start" class="btn btn-primary">Start</button>\
+   <button type="button" id="pause" class="btn btn-primary">Pause</button>\
+   <button type="button" id="resume" class="btn btn-primary">Resume</button>\
+   <button type="button" id="reset" class="btn btn-primary">Reset</button>');
 
- $('#rest-buttons').html('<button type="button" id="end" class="btn btn-info">End</button>');
+ $('#rest-buttons').html('<button type="button" id="end" class="btn btn-primary">End</button>');
 
  $('#instructions').html('<span id="current-segment">Pomodoro</span>');
 

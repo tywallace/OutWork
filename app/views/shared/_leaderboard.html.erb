@@ -1,11 +1,11 @@
-<table class = "scoreboard">
-        <tr>
-          <td><h3> Weekly Leaders </h3></td>
-		</tr>
+<h3> The Weekly 10 </h3>
+<div class = "scoreboard">
+	<ol class = "scoreboard-list">
 		<% @weekly_pomos.each do |item| %>
-		<tr>
-		    <td><%= item[0].name %></td>
-		    <td> <%= item[1].to_s %> </td>
-		</tr>
+		<li class="user"><%= image_tag(small_pic(item[0]), :class=>"circle_pic") %>
+		    	<%= link_to item[0].name, item[0], {:class=>"name"} %>
+		    <%= item[1].to_s %>
+		</li>
 		<% end %>
-</table>
+	</ol>
+</div>
