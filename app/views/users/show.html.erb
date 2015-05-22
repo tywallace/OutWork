@@ -37,9 +37,7 @@
           </div>
           <div class="row">
             <div class="col-sm-5 col-sm-offset-1">
-              <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <% goal_count(date, @user.id).each do |goal| %>
-                <%= goal.number %>
-                <% end %> 
+              <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <%= goal_count(date, @user.id) %>
               </p>
               <% daily_tags(date, @logs).each do |key, value| %>
                 <%= link_to "#{key}", tag_path(@user.id, "#{key}") %>

@@ -1,3 +1,9 @@
 
-	Actual: <%= todays_pomos(current_user) %> / 
-	Goal:   <%= todays_goal(current_user) %>
+	Actual: <%= log_count(Date.today, current_user) %> / 
+	Goal:   <%= goal_count(Date.today, current_user) %>
+	<br>
+    <% if goal_count(Date.today, current_user) == "-" %>
+    <button type="button" class="btn btn-warning btn" data-toggle="modal" data-target="#goalModal">
+      Set Your Goal
+    </button>
+    <% end %>

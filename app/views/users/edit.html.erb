@@ -7,8 +7,22 @@
 	
 	<h1>Update your profile (Disabled)</h1>
 
-	<div class="row">
+<!-- 	<div class="row">
 	  <div class="col-md-6 col-md-offset-3">
+	  	<%= form_for(@user) do |f| %>
+	      <%= render 'shared/error_messages', object: f.object %>
+
+	      <%= f.label :name %>
+	      <%= f.text_field :name, class: 'form-control' %>
+
+	      <%= f.label :timezone, "Time Zone" %>
+	      <%= f.select(:timezone,["hello"], {}, {class: 'form-control'}) %>
+
+	      <%= f.submit "Save changes", class: "btn btn-primary" %>
+	    <% end %>
 	  </div>
 	</div>
-</div>
+ -->
+<!-- 
+"International Date Line West", "Midway Island", "American Samoa", "Hawaii", "Alaska", "Pacific Time (US & Canada)", "Tijuana", "Mountain Time (US & Canada)", "Arizona", "Chihuahua", "Mazatlan", "Central Time (US & Canada)", "Saskatchewan", "Guadalajara", "Mexico City", "Monterrey", "Central America", "Eastern Time (US & Canada)", "Indiana (East)", "Bogota", "Lima", "Quito", "Atlantic Time (Canada)", "Caracas", "La Paz", "Santiago", "Newfoundland", "Brasilia", "Buenos Aires", "Montevideo", "Georgetown", "Greenland", "Mid-Atlantic", "Azores", "Cape Verde Is.", "Dublin", "Edinburgh", "Lisbon", "London", "Casablanca", "Monrovia", "UTC", "Belgrade", "Bratislava", "Budapest", "Ljubljana", "Prague", "Sarajevo", "Skopje", "Warsaw", "Zagreb", "Brussels", "Copenhagen", "Madrid", "Paris", "Amsterdam", "Berlin", "Bern", "Rome", "Stockholm", "Vienna", "West Central Africa", "Bucharest", "Cairo", "Helsinki", "Kyiv", "Riga", "Sofia", "Tallinn", "Vilnius", "Athens", "Istanbul" => "Europe/Istanbul", "Minsk" => "Europe/Minsk", "Jerusalem" => "Asia/Jerusalem", "Harare" => "Africa/Harare", "Pretoria" => "Africa/Johannesburg", "Kaliningrad" => "Europe/Kaliningrad", "Moscow" => "Europe/Moscow", "St. Petersburg" => "Europe/Moscow", "Volgograd" => "Europe/Volgograd", "Samara" => "Europe/Samara", "Kuwait" => "Asia/Kuwait", "Riyadh" => "Asia/Riyadh", "Nairobi" => "Africa/Nairobi", "Baghdad" => "Asia/Baghdad", "Tehran" => "Asia/Tehran", "Abu Dhabi" => "Asia/Muscat", "Muscat" => "Asia/Muscat", "Baku" => "Asia/Baku", "Tbilisi" => "Asia/Tbilisi", "Yerevan" => "Asia/Yerevan", "Kabul" => "Asia/Kabul", "Ekaterinburg" => "Asia/Yekaterinburg", "Islamabad" => "Asia/Karachi", "Karachi" => "Asia/Karachi", "Tashkent" => "Asia/Tashkent", "Chennai" => "Asia/Kolkata", "Kolkata" => "Asia/Kolkata", "Mumbai" => "Asia/Kolkata", "New Delhi" => "Asia/Kolkata", "Kathmandu" => "Asia/Kathmandu", "Astana" => "Asia/Dhaka", "Dhaka" => "Asia/Dhaka", "Sri Jayawardenepura" => "Asia/Colombo", "Almaty" => "Asia/Almaty", "Novosibirsk" => "Asia/Novosibirsk", "Rangoon" => "Asia/Rangoon", "Bangkok" => "Asia/Bangkok", "Hanoi" => "Asia/Bangkok", "Jakarta" => "Asia/Jakarta", "Krasnoyarsk" => "Asia/Krasnoyarsk", "Beijing" => "Asia/Shanghai", "Chongqing" => "Asia/Chongqing", "Hong Kong" => "Asia/Hong_Kong", "Urumqi" => "Asia/Urumqi", "Kuala Lumpur" => "Asia/Kuala_Lumpur", "Singapore" => "Asia/Singapore", "Taipei" => "Asia/Taipei", "Perth" => "Australia/Perth", "Irkutsk" => "Asia/Irkutsk", "Ulaanbaatar" => "Asia/Ulaanbaatar", "Seoul" => "Asia/Seoul", "Osaka" => "Asia/Tokyo", "Sapporo" => "Asia/Tokyo", "Tokyo" => "Asia/Tokyo", "Yakutsk" => "Asia/Yakutsk", "Darwin" => "Australia/Darwin", "Adelaide" => "Australia/Adelaide", "Canberra" => "Australia/Melbourne", "Melbourne" => "Australia/Melbourne", "Sydney" => "Australia/Sydney", "Brisbane" => "Australia/Brisbane", "Hobart" => "Australia/Hobart", "Vladivostok" => "Asia/Vladivostok", "Guam" => "Pacific/Guam", "Port Moresby" => "Pacific/Port_Moresby", "Magadan" => "Asia/Magadan", "Srednekolymsk" => "Asia/Srednekolymsk", "Solomon Is." => "Pacific/Guadalcanal", "New Caledonia" => "Pacific/Noumea", "Fiji" => "Pacific/Fiji", "Kamchatka" => "Asia/Kamchatka", "Marshall Is.", "Auckland", "Wellington", "Nuku'alofa", "Tokelau Is.", "Chatham Is.", "Samoa"
+ -->

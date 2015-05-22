@@ -1,4 +1,7 @@
 <% if logged_in? %>
+<%= render 'shared/goal_form_button' %>
+
+
   <div class="container">
     <div>
       <%= render 'shared/patch_notes' %>
@@ -27,7 +30,7 @@
 
 
           <div class = "col-md-12">
-            <% if todays_goal(current_user) == "Not Active Today" %>  
+            <% if goal_count(Date.today, current_user) == "Not Active Today" %>  
               <div class="goal_form">
                 <%= render 'shared/goal_form' %>
               </div>
@@ -42,9 +45,7 @@
           <% end %>
         <%= render 'timer/timer' %>
       </div>
-      I apologize from the weird behavior with Pomodoros today. There are issues with the default timezone (which is 4 hours off from Eastern Standard Time). I am working to correct this and hopefully will have something by tomorrow.
-    <br><br>
-      Your Pomodoro's are not lost. This is just an error with how I am displaying them.
+      I think I have fixed the problem. Please let me know if it is acting weird.
     </div>
 
 
