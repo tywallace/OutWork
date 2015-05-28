@@ -30,7 +30,7 @@
 
 
           <div class = "col-md-12">
-            <% if goal_count(Time.zone.today, current_user) == 6 %>  
+            <% if goal_count(Time.zone.today, current_user) == "- " %>  
               <div class="goal_form">
                 <%= render 'shared/goal_form' %>
               </div>
