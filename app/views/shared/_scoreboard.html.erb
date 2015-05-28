@@ -5,9 +5,11 @@
 		<li class="user">
 			<%= image_tag(small_pic(user), :class=>"circle_pic") %>
 			<%= link_to user.name, user, {:class=>"name"} %>
-			<span id="scoreboard_logID"><%= log_count(Date.today, user) %> </span> / 
-	  		<span id="scoreboard_goalID"><%= goal_count(Date.today, user) %></span>
-        	<%= todays_status(user) %>
+			<span id="scoreboard_logID"><%= log_count(Time.zone.today, user) %> </span> / 
+	  		<span id="scoreboard_goalID"><%= goal_count(Time.zone.today, user) %></span>
+	  		<% if todays_status(user) != nil %>
+	  		| <%= todays_status(user) %>
+	  		<% end %>	
 		</li>
 		<% end %>
 	</ol>
@@ -21,7 +23,7 @@ if ((log-goal) < 0){
     document.getElementById('scoreboard_logID').style.color = 'rgb(218,57,57)';
     document.getElementById('scoreboard_goalID').style.color = 'rgb(218,57,57)';
 }
-else if ((log-goal) > 0){
+else if ((log-goal) >= 0){
     document.getElementById('scoreboard_logID').style.color = 'green';
     document.getElementById('scoreboard_goalID').style.color = 'green';
 }

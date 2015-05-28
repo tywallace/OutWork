@@ -21,25 +21,25 @@ require 'open-uri'
 
   #Return a user's status
   def todays_status(user)
-    goal = Goal.where("created_at >= ? AND user_id = ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, user.id).last
+    goal = Goal.where("created_at >= ? AND user_id = ?", Date.today.beginning_of_day, user.id).last
     if goal.nil?
       return nil      
     elsif goal.content == ""
       return nil
     else
-      return " | " + goal.content
+      return goal.content
     end
   end
 
     #Return a count of the user's pomodoros
   def log_count(day, user)
-    Log.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, day.in_time_zone("Eastern Time (US & Canada)").end_of_day, user).count
+    Log.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.beginning_of_day, day.in_time_zone.end_of_day, user).count
   end
 
   def goal_count(day, user)
-    goal = Goal.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.in_time_zone("Eastern Time (US & Canada)").beginning_of_day, day.in_time_zone("Eastern Time (US & Canada)").end_of_day, user).last
+    goal = Goal.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.beginning_of_day, day.end_of_day, user).last
     if goal.nil?
-      return "Not Active Today"
+      return todays_goal = "-"
     elsif goal.number == 0
       return todays_goal = "-"      
     else 
@@ -48,21 +48,27 @@ require 'open-uri'
   end
 
   def daily_logs(day, user)
-    Log.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.beginning_of_day-7.hours, day.end_of_day-7.hours, user)
+    Log.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.beginning_of_day, day.end_of_day, user)
   end
 
   def daily_tags(day, logs)
     tags_array = []
     logs.each do |l|
       if l.created_at.to_date == day
-        if l.tags != []
           tags_array.push(l.tag_list)
-        end
       end
     end
     counts = Hash.new(0)
     tags_array.flatten.each { |name| counts[name] += 1}
     return counts  
+  end
+
+  def log_at_date(day, logs)
+    logs.each do |l|
+      if l.created_at.to_date == day
+          return true
+      end
+    end
   end
 
 end

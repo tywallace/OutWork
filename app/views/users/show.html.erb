@@ -16,39 +16,42 @@
           <%= render 'shared/stats' %>
         </section>
       </div>
-    <!-- <div class="col-md-8">
+     <div class="col-md-8">
       <%= render 'follow_form' if logged_in? %>
-      <% if @user.microposts.any? %>
+    <!--  <% if @user.microposts.any? %>
         <h3>Microposts (<%= @user.microposts.count %>)</h3>
         <ol class="microposts">
            render @microposts %>
         </ol>
          will_paginate @microposts %>
-      <% end %>
-    </div> -->
+      <% end %> -->
+    </div>
     <div id = "log_feed">
-    <% if @logs %>
-      <% Date.today.downto(Date.new(2015, 04, 30)) do |date| %>
-        <% if log_count(date, @user.id) > 1 %>
-          <div class="row">
-            <div class="col-sm-4 col-sm-offset-4 text-center">
-              <p class="text-muted"><% if date == Date.today %>Today<% else %> <%= date %><% end %></p>
+      <% if @logs %>
+        <% Time.zone.today.downto(Date.new(2015, 04, 30)) do |date| %>
+        <% if log_at_date(date, @logs) == true %>
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-4 text-center">
+                <p class="text-muted"><% if date == Time.zone.today %>Today<% else %> <%= date %><% end %></p>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-5 col-sm-offset-1">
-              <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <%= goal_count(date, @user.id) %>
-              </p>
-              <% daily_tags(date, @logs).each do |key, value| %>
-                <%= link_to "#{key}", tag_path(@user.id, "#{key}") %>
-                <%= "(#{value})" %>
-              <% end %>
+            <div class="row">
+              <div class="col-sm-5 col-sm-offset-1">
+                <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <%= goal_count(date, @user.id) %>
+                </p>
+                <ul class = "tags blue">
+                  <% daily_tags(date, @logs).each do |key, value| %>
+                    <li><%= link_to "#{key}", tag_path(@user.id, "#{key}") %>
+                      <span><%= "#{value}" %></span>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
             </div>
-          </div>
-          <hr>
+            <hr>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
     </div>
   </div>
 </div>

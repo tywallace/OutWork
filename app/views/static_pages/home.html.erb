@@ -25,12 +25,12 @@
 
         </div>
    <!--  <section class="micropost_form">
-                <%= render 'shared/micropost_form' %>
+                render 'shared/micropost_form' %>
                </section> -->
 
 
           <div class = "col-md-12">
-            <% if goal_count(Date.today, current_user) == "Not Active Today" %>  
+            <% if goal_count(Time.zone.today, current_user) == 6 %>  
               <div class="goal_form">
                 <%= render 'shared/goal_form' %>
               </div>
@@ -45,14 +45,13 @@
           <% end %>
         <%= render 'timer/timer' %>
       </div>
-      I think I have fixed the problem. Please let me know if it is acting weird.
     </div>
 
 
 
   <!--       <div class="col-md-8">
           <h3>Micropost Feed</h3>
-          <%= render 'shared/feed' %> 
+          render 'shared/feed' %> 
         </div> --> 
     
     <div class = "row">

@@ -82,13 +82,7 @@ class User < ActiveRecord::Base
   #return a list of active users
   def active_daily
     active = User.joins(:logs).where("logs.created_at >= ?", 
-                     Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day).uniq  
-
-    # active = User.includes(:logs).where("created_at >= ?", Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day)
-    # (logs: {:created_at => Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day})
-    # active = Log.select("user_id").where("created_at >= ?", 
-    #                 Time.now.in_time_zone("Eastern Time (US & Canada)").beginning_of_day).uniq
-    # User.where("user_id IN ?", active)
+                     Time.zone.now.beginning_of_day).uniq  
   end
 
   # Returns a user's status feed.

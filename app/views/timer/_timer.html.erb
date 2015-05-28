@@ -209,7 +209,7 @@ function stopSound(){
       sessionStorage.setItem("clock", timer);
       sessionStorage.setItem("session", segment);
       displayTime(timer);
-      document.title = "Grasshopper | " + titleTime(timer);
+      document.title = titleTime(timer) + " | Grasshopper";
     }
     else {
       stop();
