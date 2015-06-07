@@ -1,4 +1,4 @@
-<div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="goalModalLabel" aria-hidden="true">
+<div class="modal fade" id="goalModalButton" tabindex="-1" role="dialog" aria-labelledby="goalModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 	    <div class="modal-content">
 	      <%= form_for(Goal.new) do |f| %>
@@ -10,7 +10,11 @@
 	         <%= render 'shared/error_messages', object: f.object %>
 	          <div class="field">
 	            <%= f.number_field :number, min: 0, default:0, placeholder: " How many Pomodoros will you do today? (0 if you don't want to set a goal)" %>
-	            <%= f.text_area :content, placeholder: "Post a comment here, if you like (max 25 chars)" %>
+	            <% if todays_status(current_user) == nil %>		  			  		
+		            <%= f.text_area :content, placeholder: "Post a comment here, if you like (max 25 chars)" %>
+	            <% else %>
+		            <%= f.text_area :content, value: todays_status(current_user) %>
+	            <% end %>
 	            </div>
 	          </div>
 	        <div class="modal-footer">

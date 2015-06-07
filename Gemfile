@@ -10,7 +10,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  gem 'puma'
+  # gem 'puma'
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -74,3 +74,4 @@ gem 'json'
 gem "font-awesome-rails"
 
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'acts_as_votable', '~> 0.10.0'

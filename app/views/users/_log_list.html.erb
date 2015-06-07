@@ -1,0 +1,80 @@
+<% if @logs %>
+  <% Time.zone.today.downto(Date.new(2015, 04, 30)) do |date| %>
+  <% if log_at_date(date, @logs) == true %>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4 text-center">
+        <p class="text-muted"><% if date == Time.zone.today %>Today<% else %> <%= date %><% end %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-2">
+
+        <div class = "row">
+          <div class = "col-sm-2">
+            <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <%= goal_count(date, @user.id) %>
+            </p>
+          </div>
+
+          <div class="col-sm-9">
+            <ul class = "tags blue">
+              <% daily_tags(date, @logs).each do |key, value| %>
+                <li><%= link_to "#{key}", tag_path(@user.id, "#{key}") %>
+                  <span><%= "#{value}" %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <% if @user == current_user %>
+            <div class = "col-sm-1"> 
+              <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#<%= date %>" aria-expanded="false" aria-controls="#<%= date %>">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          <% end %>
+          </div>
+
+          <% if @user == current_user %>
+          <div class="collapse" id="<%= date %>">
+            <% @logs.each do |l| %>
+              <% if l.created_at.to_date == date %>
+                <div class="feed-item">
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-9 col-sm-offset-1">
+                      <div class = "detailed_log">
+                        <p class="text-muted">Session started at: <%= l.created_at.strftime("%l:%M%P") %></p>
+                         
+                          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#<%= l.id %>" aria-expanded="false" aria-controls="#<%= l.id %>">
+                            Edit
+                          </button>
+                          <div class = "collapse" id="<%= l.id %>">
+                            <%= simple_form_for l, remote:true, url: '/logs/edit' do |f| %>
+                              <%= hidden_field_tag(:id, l.id) %>
+                              <%= f.label :tag_list, "Tags (optional, separated by commas)" %><br />
+                              <div class="tag_input">
+                                <%= f.text_field :tag_list, class: "form-control" %>
+                              </div>
+                              <%= f.submit "Post", class: "btn btn-success", id: "update-result-btn" %>
+                            <% end %>
+
+                          </div>
+                        
+                          <% if l.tag_counts.any? == true %>
+                            <p class="text-muted">Tagged as: <%= l.tag_list %></p>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>                           
+                  </div> 
+                <% end %>
+              <% end %>
+            </div>  
+                  <% end %>     
+        </div>
+
+      </div>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

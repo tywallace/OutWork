@@ -39,7 +39,7 @@ require 'open-uri'
   def goal_count(day, user)
     goal = Goal.where("created_at >= ? AND created_at <= ? AND user_id = ?", day.beginning_of_day, day.end_of_day, user).last
     if goal.nil?
-      return todays_goal = "- "
+      return nil
     elsif goal.number == 0
       return todays_goal = "-"      
     else 

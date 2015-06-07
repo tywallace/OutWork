@@ -1,31 +1,75 @@
 <h3> The Daily Board </h3>
-<div class = "scoreboard">
+<div class = "scoreboard">	
 	<ol class = "scoreboard-list">
-		<% @active_users.each do |user| %>
+		<% current_user.active_daily.each do |user| %>
 		<li class="user">
 			<%= image_tag(small_pic(user), :class=>"circle_pic") %>
 			<%= link_to user.name, user, {:class=>"name"} %>
-			<span id="scoreboard_logID"><%= log_count(Time.zone.today, user) %> </span> / 
-	  		<span id="scoreboard_goalID"><%= goal_count(Time.zone.today, user) %></span>
-	  		<% if todays_status(user) != nil %>
-	  		| <%= todays_status(user) %>
-	  		<% end %>	
+			<div class = "switch">
+				<div class = "progress_info">
+					<span id="scoreboard_logID"><%= log_count(Time.zone.today, user) %> </span> / 
+			  		<span id="scoreboard_goalID"><%= goal_count(Time.zone.today, user) %></span>
+			  		<% if todays_status(user) != nil %>
+			  		| <%= todays_status(user) %>
+			  		<% end %>
+		  		</div>	
+				<div class = "prod_selection">
+					<%= link_to like_user_path(user), method: :put do %>
+						<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-up fa-stack-1x fa-inverse" title="You're crushing it!"></i>
+						</span>
+					<% end %>
+					<%= link_to dislike_user_path(user), method: :put do %>	
+						<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-down fa-stack-1x fa-inverse" title=<%=user.name %> "Time to get to work"></i>
+						</span>
+					<% end %>
+				</div>
+			</div>
+			<div class = "prod_display">
+				<% if user.get_upvotes(:vote_scope => Time.zone.today).size == 0 %>
+				<% elsif user.get_upvotes(:vote_scope => Time.zone.today).size == 1 %>
+					<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-up fa-stack-1x fa-inverse" title="You're crushing it!"></i>
+					</span>
+				<% else %>
+				<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-up fa-stack-1x fa-inverse" title="You're crushing it!"></i>
+					</span> X <%= user.get_upvotes(:vote_scope => Time.zone.today).size %>
+				<% end %>
+
+				<% if user.get_dislikes(:vote_scope => Time.zone.today).size == 0 %>
+				<% elsif user.get_dislikes(:vote_scope => Time.zone.today).size == 1 %>
+					<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-down fa-stack-1x fa-inverse" title=<%=user.name %> "Time to get to work"></i>
+					</span>
+				<% else %>
+					<span class="fa-stack fa-lg">
+						  <i class="fa fa-circle fa-stack-2x"></i>
+						  <i class="fa fa-thumbs-down fa-stack-1x fa-inverse" title=<%=user.name %> "Time to get to work"></i>
+					</span> X <%= user.get_dislikes(:vote_scope => Time.zone.today).size %>
+				<% end %>
+			</div>
 		</li>
 		<% end %>
 	</ol>
 </div>
 
 <script>
-var log = $('#scoreboard_logID').text();
-var goal = $('#scoreboard_goalID').text();
 
-if ((log-goal) < 0){
-    document.getElementById('scoreboard_logID').style.color = 'rgb(218,57,57)';
-    document.getElementById('scoreboard_goalID').style.color = 'rgb(218,57,57)';
-}
-else if ((log-goal) >= 0){
-    document.getElementById('scoreboard_logID').style.color = 'green';
-    document.getElementById('scoreboard_goalID').style.color = 'green';
-}
+$(".prod_selection").hide();
 
-</script>
+$('.switch').hover(function() {
+        $(this).find('.progress_info').hide();
+        $(this).find('.prod_selection').show();
+    }, function() {
+        $(this).find('.prod_selection').hide();
+        $(this).find('.progress_info').show();
+});
+
+ </script>

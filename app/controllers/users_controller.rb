@@ -14,8 +14,8 @@ class UsersController < ApplicationController
       @logs = @user.logs.order("created_at DESC").where("result IS NOT NULL").tagged_with(params[:tag])
       @hello = params[:tag]
     else    
-    # @microposts = @user.microposts.paginate(page: params[:page])
-    @logs = @user.logs.order("created_at DESC").where("result IS NOT NULL").all
+      # @microposts = @user.microposts.paginate(page: params[:page])
+      @logs = @user.logs.order("created_at DESC").where("result IS NOT NULL").all
     end
   end
 

@@ -9,12 +9,29 @@ class LogsController < ApplicationController
 			@log = Log.new(log_create_params)
 			if @log.save
 				current_user.logs << @log
-				redirect_to :back
+				respond_to do |format|
+			      format.html { redirect_to :back }
+			      format.js
+			    end
 			else # save failed
 				redirect_to :back
 			end
 		else # pomodoro not completed or nil
 			redirect_to :back
+		end
+	end
+
+	def edit
+		@user = User.find(current_user.id)
+		@logs = @user.logs.order("created_at DESC").where("result IS NOT NULL").all
+		@log = Log.find(params[:id])
+		@log.tag_list = params[:log][:tag_list]
+
+		if @log.save
+			respond_to do |format|
+		      	format.html { redirect_to :back }
+		      	format.js
+		    end
 		end
 	end
 

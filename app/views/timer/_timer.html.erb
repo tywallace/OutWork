@@ -4,40 +4,46 @@
 
   <div id="timer"></div>
   <div id="sound"></div>
+  
+  <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
+  <div id="tag_input">
+      <%= f.label :tag_list, "Tags (optional, separated by commas)" %><br />
+      <div class="tag_input">
+        <%= f.text_field :tag_list, class: "form-control" %>
+      </div>
+  </div>
+  <div id="done-buttons" style="display:none">
+       <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-success", id: "yes-result-btn" %>
+       <%= f.submit value: "No", name:"[log][result]", class: "btn btn-danger", id: "no-result-btn" %>
+    <% end %>
+  </div>
+
 
   <div id="work-buttons"></div>
   <div id="rest-buttons" style="display:none"></div>
 
 
 
-  <div id="done-buttons" style="display:none">
+  
 
 
     <!-- Display 'How did you do?' form -->
 
-    <%= simple_form_for @log, remote:true, url: '/logs/create' do |f| %>
-      <%= f.label :tag_list, "Tags (optional, separated by commas)" %><br />
-      <div class="tag_input">
-        <%= f.text_field :tag_list, class: "form-control" %>
-      </div>
-       <%= f.submit value: "Yes", name:"[log][result]", class: "btn btn-success", id: "yes-result-btn" %>
-       <%= f.submit value: "No", name:"[log][result]", class: "btn btn-danger", id: "no-result-btn" %>
-    <% end %>
-  </div>
   <br>
   <div id="warning-message">
-    Note: If the buttons get disabled from leaving the page and coming back, try refreshing.
+    Note: If the buttons get disabled try refreshing.
   </div>
 
 </div>
 <script>
 
-// window.onbeforeunload = function(){
-//   return 'If you leave the page your timer will break. Are you sure you want to leave?';
-// };
+var returnkey = "disabled"
 
-var totalWork = 1500; /* 1500 */
-var totalRest = 300; /* 300 */
+
+
+
+var totalWork = 5; /* 1500 */
+var totalRest = 5; /* 300 */
 
  $('#work-buttons').html('<button type="button" id="start" class="btn btn-primary">Start</button>\
    <button type="button" id="pause" class="btn btn-primary">Pause</button>\
@@ -164,7 +170,6 @@ function stopSound(){
   };
 
   resumeButton.onclick = function() {
-      // stop();
       var timeremaining = sessionStorage.getItem('clock');
       starttime = new Date().getTime();
       ended = "no";
@@ -220,9 +225,11 @@ function stopSound(){
     if (timer <= 0) {
       stop();
       pauseButton.disabled = true;
-      document.title = "Grasshopper | Alarming!";
+      // document.title = "Grasshopper";
+      flashTitle("Alarming!", 20);
       if (segment === 'work') {
         playSound('https://outwork.s3.amazonaws.com/audio/alarm')
+        returnkey = "enable";
         $('#done-buttons').css({display: 'block'});
         displayTime(timer);
         $('#work-buttons').css({display:'none'});        
@@ -254,33 +261,73 @@ function stopSound(){
 
 $('#yes-result-btn').click(function() {
   stopSound();
-   $('#done-buttons').css({display: 'none'});
-
-    sessionStorage["session"] = 'break';
-    sessionStorage["clock"] = totalRest;
-    $('#instructions').html('Break');
-    $('#timer').html(displayTime(totalRest), clock('break', totalRest));
-    $('#work-buttons').css({display:'none'});        
-    $('#rest-buttons').css({display:'block'});
-    // Start the break clock going
-    $('#start').click();
-    // Update the counter
-    $.ajax({
-      success: function(data) {
-        $('#personal_tracker').load('/ #personal_tracker');
-        $('#scoreboard').load('/ #scoreboard');
-        $('#leaderboard').load('/ #leaderboard');
-      }
-    });
+  cancelFlashTitle();
+  returnkey = "disabled";
+  $('#done-buttons').css({display: 'none'});
+  sessionStorage["session"] = 'break';
+  sessionStorage["clock"] = totalRest;
+  $('#instructions').html('Break');
+  $('#timer').html(displayTime(totalRest), clock('break', totalRest));
+  $('#work-buttons').css({display:'none'});        
+  $('#rest-buttons').css({display:'block'});
+  // Start the break clock going
+  $('#start').click();
+  // Update the counter
 });
 
 $('#no-result-btn').click(function() {
   stopSound();
-   $('#done-buttons').css({display: 'none'});
-    sessionStorage["session"] = 'work';
-    sessionStorage["clock"] = totalWork;
-    $('#timer').html(displayTime(totalWork), clock('work', totalWork));
-    $('#work-buttons').css({display:'block'});        
-    $('#rest-buttons').css({display:'none'});
+  cancelFlashTitle();
+  returnkey = "disabled";
+  $('#done-buttons').css({display: 'none'});
+  sessionStorage["session"] = 'work';
+  sessionStorage["clock"] = totalWork;
+  $('#timer').html(displayTime(totalWork), clock('work', totalWork));
+  $('#work-buttons').css({display:'block'});        
+  $('#rest-buttons').css({display:'none'});
+});
+
+
+(function () {
+
+var original = document.title;
+var timeout;
+
+window.flashTitle = function (newMsg, howManyTimes) {
+    function step() {
+        document.title = (document.title == original) ? newMsg : original;
+
+        if (--howManyTimes > 0) {
+            timeout = setTimeout(step, 1000);
+        };
+    };
+
+    howManyTimes = parseInt(howManyTimes);
+
+    if (isNaN(howManyTimes)) {
+        howManyTimes = 5;
+    };
+
+    cancelFlashTitle(timeout);
+    step();
+};
+
+window.cancelFlashTitle = function () {
+    clearTimeout(timeout);
+    document.title = original;
+};
+
+}());
+
+
+$("#new_log").on("keypress", function (e) {
+  if (e.keyCode == 13) {
+    if (returnkey == "disabled") {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 });
 </script>

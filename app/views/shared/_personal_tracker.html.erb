@@ -1,9 +1,10 @@
-
-	Actual: <%= log_count(Time.zone.today, current_user) %> / 
-	Goal:   <%= goal_count(Time.zone.today, current_user) %>
+	<% if goal_count(Time.zone.today, current_user) == "-" or goal_count(Time.zone.today, current_user) == nil %> 
+	Actual: <%= log_count(Time.zone.today, current_user) %>
 	<br>
-    <% if goal_count(Time.zone.today, current_user) == "-" %>
-    <button type="button" class="btn btn-warning btn" data-toggle="modal" data-target="#goalModal">
+    <button type="button" class="btn btn-warning btn" data-toggle="modal" data-target="#goalModalButton">
       Set Your Goal
     </button>
+    <% else %>
+    Actual: <%= log_count(Time.zone.today, current_user) %> / 
+	Goal:   <%= goal_count(Time.zone.today, current_user) %>
     <% end %>

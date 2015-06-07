@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :following, :followers
+      put "like", to: "static_pages#upvote"
+      put "dislike", to: "static_pages#downvote"
     end
   end
 
@@ -33,9 +35,8 @@ Rails.application.routes.draw do
   resources :logs, only: [:create]
 
   post "logs/create" => "logs#create"
-  # post "logs/update_ended_at" => "logs#update_ended_at"
-  # post "logs/update_result" => "logs#update_result"
-  # post "logs/start_work" => "logs#start_work"
+  patch "logs/edit" => "logs#edit"
+
 
   # get 'timer' => "timer#timer"
 

@@ -1,22 +1,17 @@
 <% provide(:title, @user.name) %>
 
-
 <div class="container">
-  <div id="feed">
-     <!-- render 'logs/log' -->
-  </div>
   <div class="row">
-      <div class ="user_profile">
-        <section>
-          
-            <%= image_tag(profile_pic @user)%>
-          <h1><%= @user.name %></h1>
-        </section>
-        <section class="stats">
-          <%= render 'shared/stats' %>
-        </section>
-      </div>
-     <div class="col-md-8">
+    <div class ="user_profile">
+      <section>
+        <%= image_tag(profile_pic @user)%>
+        <h1><%= @user.name %></h1>
+      </section>
+      <section class="stats">
+        <%= render 'shared/stats' %>
+      </section>
+    </div>
+    <div class="col-md-8">
       <%= render 'follow_form' if logged_in? %>
     <!--  <% if @user.microposts.any? %>
         <h3>Microposts (<%= @user.microposts.count %>)</h3>
@@ -27,32 +22,7 @@
       <% end %> -->
     </div>
     <div id = "log_feed">
-      <% if @logs %>
-        <% Time.zone.today.downto(Date.new(2015, 04, 30)) do |date| %>
-        <% if log_at_date(date, @logs) == true %>
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-4 text-center">
-                <p class="text-muted"><% if date == Time.zone.today %>Today<% else %> <%= date %><% end %></p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-5 col-sm-offset-1">
-                <p class="task-feed text-danger"><%= log_count(date, @user.id) %> / <%= goal_count(date, @user.id) %>
-                </p>
-                <ul class = "tags blue">
-                  <% daily_tags(date, @logs).each do |key, value| %>
-                    <li><%= link_to "#{key}", tag_path(@user.id, "#{key}") %>
-                      <span><%= "#{value}" %></span>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-            <hr>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= render partial: 'log_list' , locals: {logs: @logs}%>
     </div>
   </div>
 </div>
-

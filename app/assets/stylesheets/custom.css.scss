@@ -488,7 +488,7 @@ span.picture {
   padding: 20px;
 }
 
-#work-buttons, #rest-buttons, #done-buttons {
+#work-buttons, #rest-buttons, #done-buttons, #tag_input{
   text-align: center;
   padding: 10px;
 }
@@ -570,6 +570,12 @@ textarea{
   position: relative;
 }
 
+.prod_display {
+  position: absolute;
+  left:300px;
+  top:0px;
+}
+
 /*Tags*/
 
 .log_feed ol, ul {
@@ -579,6 +585,14 @@ textarea{
 .log_feed table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.detailed_log {
+  margin: 10px;
+}
+
+.feed-item hr{
+  margin: 0px;
 }
 
 .tags {
